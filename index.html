@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHÚC TRẦN — SOFTWARE ENGINEER — ĐẠI HỌC CẦN THƠ</title>
+  <meta name="description" content="PHÚC TRẦN (phuctran1501) — Software Engineer & Backend Specialist tại Đại học Cần Thơ (CTU). C# ASP.NET Core Clean Architecture, Database Optimization & Applied AI.">
+
+  <!-- Can Tho University (CTU) Logo Tab Favicon -->
+  <link rel="icon" type="image/png" href="https://www.ctu.edu.vn/images/upload/logo.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ctu: {
+              DEFAULT: '#1f5ca9',
+              light: '#2b77d6',
+              dark: '#0f3d75',
+              navy: '#071120'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Can Tho University Blue Theme with Dark/Light Support -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[var(--bg-main)] text-[var(--text-main)] font-sans antialiased min-h-screen relative selection:bg-[#1f5ca9] selection:text-white">
+
+  <!-- Native Local Audio Player (Playing "assets/xuong-rong-intro.mp3") -->
+  <audio id="local-audio-player" loop preload="auto">
+    <source src="assets/xuong-rong-intro.mp3" type="audio/mpeg">
+    <source src="assets/xương rồng (intro).mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Interactive CTU Blue Wave Field Canvas -->
+  <canvas id="geometric-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-60"></canvas>
+
+  <!-- ================= TOP AUDIO UNLOCK BANNER ================= -->
+  <aside id="audio-unlock-banner" class="fixed top-16 left-0 right-0 z-50 flex justify-center px-4 pointer-events-auto transition-all duration-300">
+    <div class="banner-pulse px-4 py-2 bg-[var(--bg-card)] border border-[#1f5ca9] text-[#1f5ca9] font-mono text-xs flex items-center gap-3 chamfer-diagonal shadow-lg backdrop-blur-md">
+      <span class="w-2 h-2 bg-[#1f5ca9] animate-ping"></span>
+      <span data-i18n="audio_banner_text">🎵 NHẠC NỀN: XƯƠNG RỒNG (INTRO) — DANGRANGTO [NHẤP BẤT KỲ ĐÂU ĐỂ BẬT NHẠC]</span>
+      <button onclick="window.hiFiDeck && window.hiFiDeck.play()" class="px-2.5 py-1 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold text-[10px] chamfer-btn">
+        PHÁT NGAY ▶
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= TOP NAVIGATION HEADER ================= -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-[var(--bg-card)]/90 backdrop-blur-md border-b border-[var(--border-line)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand & CTU Logo (Angular Chamfered Badge) -->
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 bg-blue-900/20 border border-[#1f5ca9]/40 chamfer-tr flex items-center justify-center p-1 group-hover:border-[#1f5ca9] transition">
+          <img src="https://www.ctu.edu.vn/images/upload/logo.png" alt="CTU Logo" class="w-full h-full object-contain">
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-sm tracking-tight text-[var(--text-main)] group-hover:text-[#1f5ca9] transition font-mono" data-i18n="brand_title">
+            TRẦN PHÚC
+          </span>
+          <span class="text-[10px] font-mono text-[#1f5ca9] font-semibold tracking-wider" data-i18n="brand_sub">
+            SOFTWARE ENGINEER — ĐẠI HỌC CẦN THƠ
+          </span>
+        </div>
+      </a>
+
+      <!-- Center: Audio Quick Indicator Pill -->
+      <button id="header-music-btn" class="hidden md:flex items-center gap-3 px-3.5 py-1.5 bg-[var(--bg-surface)] border border-[var(--border-line)] hover:border-[#1f5ca9] chamfer-diagonal text-xs font-mono text-[var(--text-main)] transition" title="Nhấp để chuyển trạng thái phát nhạc">
+        <span class="w-2 h-2 bg-[#1f5ca9] animate-pulse"></span>
+        <span class="text-[#1f5ca9] font-bold">AUDIO:</span>
+        <span class="font-bold" data-i18n="audio_track_name">xương rồng (intro) — Dangrangto</span>
+        <span id="audio-status-pill" class="text-[10px] text-[#1f5ca9] font-bold">PLAYING • LOOP</span>
+      </button>
+
+      <!-- Right: Theme Switcher, Nav Links & Language Switcher -->
+      <div class="flex items-center gap-3">
+        
+        <nav class="hidden lg:flex items-center gap-6 text-xs font-mono text-[var(--text-muted)] font-medium">
+          <a href="#about" data-i18n="nav_about" class="hover:text-[#1f5ca9] transition">Về tôi</a>
+          <a href="#interactive-lab" data-i18n="nav_interactive" class="hover:text-[#1f5ca9] transition">Trực chiến</a>
+          <a href="#projects" data-i18n="nav_projects" class="hover:text-[#1f5ca9] transition">Dự án</a>
+          <a href="#topology" data-i18n="nav_topology" class="hover:text-[#1f5ca9] transition">Cấu trúc hệ thống</a>
+          <a href="#contact" data-i18n="nav_contact" class="hover:text-[#1f5ca9] transition">Liên hệ</a>
+        </nav>
+
+        <!-- Extensible Random UI Switcher [ĐỔI GIAO DIỆN / RANDOM UI] -->
+        <button id="ui-mode-random-btn" onclick="window.uiEngine && window.uiEngine.randomizeMode()" class="chamfer-btn px-3 py-1.5 text-xs font-mono bg-[var(--bg-surface)] hover:bg-[var(--bg-card)] border border-[#1f5ca9] text-[#1f5ca9] transition font-bold" title="Đổi giao diện ngẫu nhiên">
+          <span id="ui-mode-label" data-i18n="ui_mode_random">ĐỔI GIAO DIỆN</span>
+        </button>
+
+        <!-- Live Camera Coordinates Display -->
+        <div id="spatial-coords-hud" class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 bg-[var(--bg-surface)] border border-[var(--border-line)] font-mono text-[10px] text-[var(--text-dim)] font-semibold">
+          <span>X: 0 • Y: 0 • ZOOM: 100%</span>
+        </div>
+
+        <!-- Theme Toggle Switch [🌙 TỐI | ☀️ SÁNG] -->
+        <button id="theme-toggle-btn" onclick="window.toggleTheme()" class="px-2.5 py-1 text-xs font-mono bg-[var(--bg-surface)] border border-[var(--border-line)] hover:border-[#1f5ca9] text-[var(--text-main)] transition chamfer-btn font-semibold" title="Chuyển đổi giao diện Sáng / Tối">
+          <span>🌙</span>
+        </button>
+
+        <!-- Bilingual Language Pill (VI / EN) -->
+        <div class="flex items-center bg-[var(--bg-surface)] border border-[var(--border-line)] text-xs font-mono">
+          <button data-lang="vi" onclick="window.setLanguage('vi')" class="lang-btn px-2.5 py-1 transition bg-[#1f5ca9] text-white font-bold border border-[#1f5ca9]">VI</button>
+          <button data-lang="en" onclick="window.setLanguage('en')" class="lang-btn px-2.5 py-1 transition text-slate-400 border border-transparent hover:text-[#1f5ca9]">EN</button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 bg-[var(--bg-surface)] border border-[var(--border-line)] text-[var(--text-main)]">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-[var(--bg-card)] border-b border-[var(--border-line)] px-6 py-4 space-y-3 font-mono text-xs">
+      <a href="#about" data-i18n="nav_about" class="block text-[var(--text-main)] hover:text-[#1f5ca9]">Về tôi</a>
+      <a href="#interactive-lab" data-i18n="nav_interactive" class="block text-[var(--text-main)] hover:text-[#1f5ca9]">Trực chiến</a>
+      <a href="#projects" data-i18n="nav_projects" class="block text-[var(--text-main)] hover:text-[#1f5ca9]">Dự án</a>
+      <a href="#topology" data-i18n="nav_topology" class="block text-[var(--text-main)] hover:text-[#1f5ca9]">Cấu trúc hệ thống</a>
+      <a href="#contact" data-i18n="nav_contact" class="block text-[var(--text-main)] hover:text-[#1f5ca9]">Liên hệ</a>
+    </div>
+  </header>
+
+  <!-- ================= INFINITE SPATIAL VIEWPORT ================= -->
+  <div id="spatial-viewport">
+    <div id="spatial-world">
+      <!-- Circuit Bus Cables Vector Canvas -->
+      <svg id="spatial-connections"></svg>
+
+      <main class="relative z-10 pt-24 pb-20 space-y-24">
+
+    <section id="hero" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-8">
+      <div class="border-t border-b border-[var(--border-line)] py-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <!-- Left Column: Core Value Proposition & Metrics -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <div class="flex items-center gap-3 font-mono text-xs">
+            <span class="text-[#1f5ca9] font-bold" data-i18n="hero_index">[TỔNG QUAN HỆ THỐNG]</span>
+            <span class="text-slate-400">•</span>
+            <span class="text-[var(--text-muted)] font-semibold" data-i18n="hero_tag">SOFTWARE ENGINEER — BACKEND ARCHITECT</span>
+          </div>
+
+          <div class="space-y-1">
+            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black text-[var(--text-main)] tracking-tighter uppercase leading-none" data-i18n="hero_name">
+              PHÚC TRẦN
+            </h1>
+            <div class="text-xs font-mono text-[#1f5ca9] font-medium pt-1" data-i18n="hero_location">
+              TỌA ĐỘ: 10.0452° N, 105.7469° E • CẦN THƠ, VN
+            </div>
+          </div>
+
+          <p class="text-[var(--text-muted)] text-base sm:text-lg leading-relaxed max-w-2xl font-normal border-l-2 border-[#1f5ca9] pl-4" data-i18n="hero_statement">
+            Xây dựng các hệ thống phân tán hiệu năng cao, kiến trúc backend vững chắc (C# / ASP.NET Core Clean Architecture), tối ưu hóa cơ sở dữ liệu lớn và tích hợp trí tuệ nhân tạo vào sản phẩm thực tế.
+          </p>
+
+          <!-- Key Metrics Matrix (Faceted Chamfer Cut) -->
+          <div class="grid grid-cols-3 border border-[var(--border-line)] bg-[var(--bg-card)] font-mono text-left chamfer-diagonal shadow-sm">
+            <div class="p-4 border-r border-[var(--border-line)]">
+              <div class="text-base sm:text-lg font-bold text-[#1f5ca9]" data-i18n="hero_stat_ctu">ĐẠI HỌC CẦN THƠ</div>
+              <div class="text-[10px] text-[var(--text-dim)] uppercase mt-0.5" data-i18n="hero_stat_ctu_sub">Sinh viên Kỹ thuật Phần mềm</div>
+            </div>
+            <div class="p-4 border-r border-[var(--border-line)]">
+              <div class="text-base sm:text-lg font-bold text-[var(--text-main)]" data-i18n="hero_stat_core">C# / ASP.NET CORE</div>
+              <div class="text-[10px] text-[var(--text-dim)] uppercase mt-0.5" data-i18n="hero_stat_core_sub">Nền tảng kỹ thuật cốt lõi</div>
+            </div>
+            <div class="p-4">
+              <div class="text-base sm:text-lg font-bold text-[#1f5ca9]" data-i18n="hero_stat_users">100+ NGƯỜI DÙNG</div>
+              <div class="text-[10px] text-[var(--text-dim)] uppercase mt-0.5" data-i18n="hero_stat_users_sub">Hưởng lợi từ CTU-Scheduler</div>
+            </div>
+          </div>
+
+          <!-- Action Buttons with Chamfered Polygon Cuts -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <a href="#interactive-lab" class="chamfer-btn px-6 py-3.5 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold text-xs font-mono tracking-wider shadow-md shadow-blue-500/20">
+              <span data-i18n="hero_btn_demo">TRẢI NGHIỆM TƯƠNG TÁC ➔</span>
+            </a>
+            <a href="#projects" class="chamfer-btn px-6 py-3.5 bg-[var(--bg-card)] hover:bg-[var(--bg-surface)] text-[var(--text-main)] border border-[var(--border-line)] font-mono text-xs tracking-wider">
+              <span data-i18n="hero_btn_projects">XEM DỰ ÁN TIÊU BIỂU</span>
+            </a>
+            <button onclick="window.copyEmail()" class="chamfer-btn px-4 py-3.5 bg-blue-900/10 hover:bg-blue-900/20 text-[#1f5ca9] border border-blue-500/30 font-mono text-xs font-bold">
+              [COPY: phuctran1501@gmail.com]
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Official GitHub Avatar with 3D Gyroscope (phuctran1501) -->
+        <div class="lg:col-span-5 hero-stage-container">
+          
+          <div class="hero-stage-card corner-cross arch-card chamfer-tr p-5 border border-[#1f5ca9]/40 bg-[var(--bg-card)] space-y-4 shadow-xl">
+            
+            <!-- Top Card Header: Telemetry & Status -->
+            <div class="flex items-center justify-between pb-3 border-b border-[var(--border-line)] text-[10px] font-mono">
+              <span class="text-[#1f5ca9] font-bold flex items-center gap-1.5">
+                <span class="w-2 h-2 bg-[#1f5ca9] animate-pulse"></span>
+                <span data-i18n="avatar_spec_title">HỒ SƠ ĐỊNH DANH KỸ SƯ</span>
+              </span>
+              <span id="hero-telemetry-coords" class="text-[var(--text-dim)]">CTU_SYSTEM • 3D_IDLE</span>
+            </div>
+
+            <!-- The Portrait Viewport: Official GitHub Avatar (phuctran1501) with Laser Scanner -->
+            <div class="relative hero-portrait-frame aspect-[4/5] overflow-hidden group cursor-pointer" onclick="window.openDossierModal()" title="Nhấp để xem hồ sơ kỹ sư chi tiết">
+              
+              <!-- Giant Background Kinetic Watermark Typography -->
+              <div class="absolute inset-0 flex flex-col justify-around pointer-events-none opacity-20 overflow-hidden">
+                <span class="stroke-watermark font-black text-5xl font-mono">PHÚC TRẦN • ARCHITECT</span>
+                <span class="stroke-watermark font-black text-5xl font-mono">CAN THO UNIVERSITY</span>
+                <span class="stroke-watermark font-black text-5xl font-mono">C# .NET CLEAN ARCH</span>
+              </div>
+
+              <!-- Official GitHub Avatar of PHÚC TRẦN (phuctran1501) with fallback -->
+              <img id="hero-portrait-img" src="https://github.com/phuctran1501.png" onerror="this.onerror=null; this.src='assets/avatar.jpg';" alt="PHÚC TRẦN GitHub Avatar" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 relative z-10">
+
+              <!-- Real Scanning Laser Beam in CTU Blue -->
+              <div class="scanner-laser"></div>
+
+              <!-- Blueprint Reticle & Coordinates Overlays -->
+              <div class="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-3 font-mono text-[9px]">
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-0.5 bg-black/75 border border-[#1f5ca9] text-sky-400 font-bold" data-i18n="avatar_dev_id">ID: PHUCTRAN1501</span>
+                  <span class="px-2 py-0.5 bg-black/75 border border-slate-700 text-slate-300">10.0452° N</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-0.5 bg-[#0d2c54] text-white font-bold">CAN THO UNIVERSITY (CTU)</span>
+                  <span class="px-2 py-0.5 bg-[#1f5ca9] text-white font-bold animate-pulse">VERIFIED DEV</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Card Bottom Bar: Status & Dossier Trigger -->
+            <div class="pt-1 flex items-center justify-between text-[11px] font-mono">
+              <span class="text-[#1f5ca9] flex items-center gap-1.5 font-bold">
+                <span class="w-1.5 h-1.5 bg-[#1f5ca9]"></span>
+                <span data-i18n="avatar_status">TRẠNG THÁI: SẴN SÀNG NHẬN CƠ HỘI</span>
+              </span>
+              <button onclick="window.openDossierModal()" class="text-[#1f5ca9] hover:underline font-bold" data-i18n="hero_inspect_dossier">
+                MỞ HỒ SƠ KỸ SƯ ↗
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    
+
+        <div id="about" class="border-t border-[var(--border-line)] pt-8 space-y-8">
+        
+        <div class="flex items-center gap-3 font-mono text-xs">
+          <span class="text-[#1f5ca9] font-bold" data-i18n="about_index">[VỀ BẢN THÂN]</span>
+          <span class="text-slate-400">•</span>
+          <span class="text-[var(--text-muted)] uppercase font-semibold">TRIẾT LÝ HỆ THỐNG</span>
+        </div>
+
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[var(--text-main)] tracking-tight" data-i18n="about_title">
+          TƯ DUY KỸ THUẬT & TRIẾT LÝ HỆ THỐNG
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 text-[var(--text-muted)] text-sm leading-relaxed font-normal">
+          <p data-i18n="about_p1">
+            Tôi là sinh viên Kỹ thuật Phần mềm tại Đại học Cần Thơ (CTU). Tôi không bị cuốn theo những khuôn mẫu AI slop lặp lại nhàm chán. Trọng tâm của tôi là cấu trúc hệ thống: tính chịu tải, độ trễ thấp, Clean Architecture tách bạch và cơ sở dữ liệu được tối ưu chỉ mục chỉn chu.
+          </p>
+          <p data-i18n="about_p2">
+            Mọi sản phẩm tôi thực hiện đều giải quyết triệt để vấn đề thực tiễn: từ CTU-Scheduler giải phóng hàng ngàn sinh viên Đại học Cần Thơ khỏi nỗi lo trùng lịch học, đến NewsHub chống lại tình trạng quá tải thông tin số bằng AI tóm tắt 10 giây.
+          </p>
+        </div>
+
+        <!-- 3 Pillars Matrix (Faceted Chamfer Grid) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 border border-[var(--border-line)] bg-[var(--bg-card)] shadow-sm">
+          
+          <div class="p-6 border-b md:border-b-0 md:border-r border-[var(--border-line)] space-y-2">
+            <h3 class="text-sm font-bold text-[#1f5ca9] font-mono" data-i18n="about_card_1_title">01 — CLEAN ARCHITECTURE</h3>
+            <p class="text-xs text-[var(--text-dim)] leading-relaxed font-sans" data-i18n="about_card_1_desc">
+              Tách biệt Domain, Application, Infrastructure. Đảm bảo mã nguồn dễ kiểm thử độc lập, ít phụ thuộc và sẵn sàng mở rộng.
+            </p>
+          </div>
+
+          <div class="p-6 border-b md:border-b-0 md:border-r border-[var(--border-line)] space-y-2">
+            <h3 class="text-sm font-bold text-[#1f5ca9] font-mono" data-i18n="about_card_2_title">02 — GIẢI TOÁN RÀNG BUỘC</h3>
+            <p class="text-xs text-[var(--text-dim)] leading-relaxed font-sans" data-i18n="about_card_2_desc">
+              Ứng dụng thuật toán Constraint Satisfaction và Game Theory vào sản phẩm desktop và web thực tế.
+            </p>
+          </div>
+
+          <div class="p-6 space-y-2">
+            <h3 class="text-sm font-bold text-[#1f5ca9] font-mono" data-i18n="about_card_3_title">03 — TÍCH HỢP AI THỰC CHIẾN</h3>
+            <p class="text-xs text-[var(--text-dim)] leading-relaxed font-sans" data-i18n="about_card_3_desc">
+              Khai thác Gemini API và LLMs theo pipeline có kiểm soát độ trễ, giới hạn tần suất (rate-limit) và xử lý lỗi.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= HI-FI CTU AUDIO DECK (SYNCHRONIZED KARAOKE LYRICS ENGINE) ================= -->
+    <section id="audio-deck-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="corner-cross arch-card chamfer-diagonal p-6 border border-[var(--border-line)] bg-[var(--bg-card)] shadow-lg">
+        
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-[var(--border-line)]">
+          <div>
+            <div class="text-[10px] font-mono text-[#1f5ca9] font-bold tracking-wider" data-i18n="deck_title">HI-FI AUDIO DECK — BĂNG TỪ CÔNG NGHỆ</div>
+            <h2 class="text-lg font-bold text-[var(--text-main)] font-mono" data-i18n="deck_track">xương rồng (intro) — Dangrangto (Local Audio File)</h2>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <!-- Volume Slider -->
+            <div class="hidden sm:flex items-center gap-2 font-mono text-xs text-[var(--text-muted)]">
+              <span data-i18n="deck_vol_lbl">ÂM LƯỢNG:</span>
+              <input id="deck-volume-slider" type="range" min="0" max="1" step="0.05" value="0.8" class="w-20 accent-[#1f5ca9]">
+            </div>
+
+            <button id="deck-toggle-btn" class="chamfer-btn px-6 py-2.5 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold font-mono text-xs transition shadow-md shadow-blue-500/20">
+              <span id="deck-btn-label" data-i18n="deck_play_btn">PHÁT BẢN NHẠC</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-5 items-center">
+          
+          <!-- Left: Real Tape Reel Animation -->
+          <div class="lg:col-span-5 flex flex-col justify-between p-5 bg-slate-950 text-white font-mono text-xs chamfer-tr">
+            <div class="flex items-center justify-around py-4">
+              <!-- Left Tape Reel -->
+              <div class="cassette-reel w-16 h-16 border-2 border-dashed border-sky-400/60 flex items-center justify-center">
+                <div class="w-5 h-5 bg-slate-800 border border-sky-400"></div>
+              </div>
+
+              <!-- Tape Center Branding -->
+              <div class="w-36 h-10 border border-slate-700 bg-slate-900 flex flex-col items-center justify-center text-[9px]">
+                <span class="font-bold text-sky-400">DANGRANGTO</span>
+                <span class="text-[8px] text-slate-400">CTU HI-RES SOUND</span>
+              </div>
+
+              <!-- Right Tape Reel -->
+              <div class="cassette-reel w-16 h-16 border-2 border-dashed border-sky-400/60 flex items-center justify-center">
+                <div class="w-5 h-5 bg-slate-800 border border-sky-400"></div>
+              </div>
+            </div>
+
+            <!-- Tape Timeline & Real Dynamic Frequency Bars -->
+            <div class="flex items-center justify-between pt-3 border-t border-slate-800 text-[11px] text-slate-300">
+              <span id="deck-time-display">00:00 / 04:05</span>
+              
+              <!-- 8 Dynamic Frequency Spectrum Bars -->
+              <div class="flex items-end gap-1.5 h-7">
+                <span class="spectrum-bar w-1.5 bg-[#1f5ca9] h-2"></span>
+                <span class="spectrum-bar w-1.5 bg-blue-500 h-3"></span>
+                <span class="spectrum-bar w-1.5 bg-sky-400 h-4"></span>
+                <span class="spectrum-bar w-1.5 bg-sky-300 h-5"></span>
+                <span class="spectrum-bar w-1.5 bg-blue-400 h-4"></span>
+                <span class="spectrum-bar w-1.5 bg-blue-500 h-3"></span>
+                <span class="spectrum-bar w-1.5 bg-[#1f5ca9] h-2"></span>
+                <span class="spectrum-bar w-1.5 bg-sky-400 h-4"></span>
+              </div>
+
+              <span class="text-sky-400" data-i18n="audio_loop_status">LẶP VÔ TẬN: BẬT</span>
+            </div>
+          </div>
+
+          <!-- Right: Synchronized Lyrics Telemetry Engine (Controlled container scrolling, NO page jump) -->
+          <div class="lg:col-span-7 space-y-2">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-[#1f5ca9] font-bold" data-i18n="deck_lyrics_title">LỜI BÀI HÁT ĐỒNG BỘ — KARAOKE TELEMETRY</span>
+              <span class="text-[var(--text-dim)] text-[10px]" data-i18n="deck_lyrics_hint">(Nhấp vào dòng chữ bất kỳ để chuyển đến đoạn nhạc tương ứng)</span>
+            </div>
+
+            <!-- Dynamic Lyrics Scroll Box -->
+            <div id="lyrics-scroll-container" class="lyrics-scroll-box h-44 overflow-y-auto p-3 bg-[var(--bg-surface)] border border-[var(--border-line)] divide-y divide-[var(--border-line)] chamfer-diagonal">
+              <!-- Populated by js/audio.js -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    
+
+    <!-- ================= INTERACTIVE SANDBOX SECTION (4 LIVE LABS) ================= -->
+    <section id="interactive-lab" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="border-t border-[var(--border-line)] pt-8 space-y-8">
+        
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <div class="space-y-1">
+            <div class="text-xs font-mono text-[#1f5ca9] font-bold" data-i18n="interactive_index">[KHÔNG GIAN TRẢI NGHIỆM TRỰC TIẾP]</div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[var(--text-main)] tracking-tight" data-i18n="interactive_title">
+              PHÒNG THÍ NGHIỆM TƯƠNG TÁC THỜI GIAN THỰC
+            </h2>
+          </div>
+          <div class="text-xs font-mono text-[var(--text-dim)]" data-i18n="interactive_subtitle">
+            Trực tiếp tương tác với các thuật toán cốt lõi của 4 hệ thống tiêu biểu ngay trên trình duyệt.
+          </div>
+        </div>
+
+        <!-- Sandbox Tabs Bar (4 Labs) -->
+        <div class="flex flex-wrap items-center gap-2 border-b border-[var(--border-line)] font-mono text-xs">
+          <button id="sandbox-tab-ctu" onclick="window.switchSandboxTab('ctu')" class="sandbox-tab-btn px-4 py-2 bg-[#1f5ca9] text-white border border-[#1f5ca9] font-bold transition" data-i18n="sandbox_ctu_tab">
+            CTU-Scheduler (Giải lịch)
+          </button>
+          <button id="sandbox-tab-smarthire" onclick="window.switchSandboxTab('smarthire')" class="sandbox-tab-btn px-4 py-2 bg-transparent text-[var(--text-muted)] border border-[var(--border-line)] hover:text-[#1f5ca9] hover:bg-blue-50/10 transition" data-i18n="sandbox_smarthire_tab">
+            SmartHire (So khớp ATS)
+          </button>
+          <button id="sandbox-tab-nim" onclick="window.switchSandboxTab('nim')" class="sandbox-tab-btn px-4 py-2 bg-transparent text-[var(--text-muted)] border border-[var(--border-line)] hover:text-[#1f5ca9] hover:bg-blue-50/10 transition" data-i18n="sandbox_nim_tab">
+            Nimdora (Chơi cờ NIM)
+          </button>
+          <button id="sandbox-tab-news" onclick="window.switchSandboxTab('news')" class="sandbox-tab-btn px-4 py-2 bg-transparent text-[var(--text-muted)] border border-[var(--border-line)] hover:text-[#1f5ca9] hover:bg-blue-50/10 transition" data-i18n="sandbox_news_tab">
+            NewsHub (AI Digest)
+          </button>
+        </div>
+
+        <!-- LAB 1: CTU Scheduler Live Solver Panel -->
+        <div id="sandbox-panel-ctu" class="sandbox-panel corner-cross arch-card chamfer-diagonal p-6 border border-[var(--border-line)] bg-[var(--bg-card)] space-y-4 shadow-lg">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-lg font-bold text-[var(--text-main)] font-mono" data-i18n="sandbox_ctu_title">Thuật toán giải bài toán ràng buộc thời khóa biểu CTU</h3>
+              <p class="text-xs text-[var(--text-muted)] mt-1" data-i18n="sandbox_ctu_desc">Nhấp nút bên dưới để khởi chạy thuật toán kiểm tra xung đột thời gian và cắt tỉa nhánh trùng lịch:</p>
+            </div>
+            <button id="ctu-solver-btn" onclick="window.runCtuSolverSimulation()" class="chamfer-btn px-5 py-2.5 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold font-mono text-xs whitespace-nowrap shadow-md shadow-blue-500/20">
+              <span data-i18n="sandbox_ctu_btn">TỐI ƯU HÓA LỊCH HỌC NGAY ➔</span>
+            </button>
+          </div>
+
+          <div id="ctu-solver-terminal" class="bg-slate-950 p-4 border border-slate-800 font-mono text-xs text-slate-300 min-h-[110px] space-y-1">
+            <div class="text-slate-500">[READY] Danh sách học phần đã nạp sẵn (CT201, CT202, CT203, CT204). Nhấp nút bên trên để giải thuật...</div>
+          </div>
+
+          <div id="ctu-solver-result-grid" class="hidden pt-2 space-y-2 font-mono text-xs">
+            <div class="text-[#1f5ca9] font-bold flex items-center justify-between">
+              <span>✓ THỜI KHÓA BIỂU TỐI ƯU HÓA HOÀN TẤT (0 XUNG ĐỘT)</span>
+              <span class="text-slate-400 text-[10px]">Thời gian thực thi: 11.8ms</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-[11px]">
+              <div class="p-3 bg-blue-900/10 border border-blue-500/30">
+                <div class="text-slate-400 text-[10px]">Thứ 2 (07:30 - 10:00)</div>
+                <div class="font-bold text-[#1f5ca9] mt-1">C# .NET (CT202)</div>
+                <div class="text-slate-400 text-[9px]">Phòng 101/DI (Còn chỗ)</div>
+              </div>
+              <div class="p-3 bg-blue-900/10 border border-blue-500/30">
+                <div class="text-slate-400 text-[10px]">Thứ 3 (13:30 - 16:00)</div>
+                <div class="font-bold text-[#1f5ca9] mt-1">Kiến trúc PM (CT201)</div>
+                <div class="text-slate-400 text-[9px]">Phòng 204/DI (Còn chỗ)</div>
+              </div>
+              <div class="p-3 bg-blue-900/10 border border-blue-500/30">
+                <div class="text-slate-400 text-[10px]">Thứ 4 (07:30 - 10:00)</div>
+                <div class="font-bold text-[#1f5ca9] mt-1">CSDL Phân tán (CT203)</div>
+                <div class="text-slate-400 text-[9px]">Phòng 301/DI (Còn chỗ)</div>
+              </div>
+              <div class="p-3 bg-blue-900/10 border border-blue-500/30">
+                <div class="text-slate-400 text-[10px]">Thứ 6 (13:30 - 16:00)</div>
+                <div class="font-bold text-[#1f5ca9] mt-1">AI Ứng dụng (CT204)</div>
+                <div class="text-slate-400 text-[9px]">Lab AI/DI (Còn chỗ)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LAB 2: SmartHire ATS Matching Engine Panel -->
+        <div id="sandbox-panel-smarthire" class="sandbox-panel corner-cross arch-card chamfer-diagonal p-6 border border-[var(--border-line)] bg-[var(--bg-card)] space-y-4 shadow-lg hidden">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-lg font-bold text-[var(--text-main)] font-mono" data-i18n="sandbox_smarthire_title">Thuật toán so khớp hồ sơ ứng viên theo chuẩn ATS</h3>
+              <p class="text-xs text-[var(--text-muted)] mt-1" data-i18n="sandbox_smarthire_desc">Chọn hồ sơ ứng viên và mô tả công việc (JD) để quan sát hệ thống tính toán trọng số tương thích thời gian thực:</p>
+            </div>
+            <button id="smarthire-btn" onclick="window.runSmartHireSimulation()" class="chamfer-btn px-5 py-2.5 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold font-mono text-xs whitespace-nowrap shadow-md shadow-blue-500/20">
+              <span data-i18n="sandbox_smarthire_btn">PHÂN TÍCH & CHẤM ĐIỂM ATS NGAY ➔</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+            <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)]">
+              <label class="block text-[var(--text-dim)] text-[10px] font-bold mb-1">ỨNG VIÊN ĐỐI SOÁT (CV):</label>
+              <select id="smarthire-candidate-select" class="w-full bg-[var(--bg-card)] border border-[var(--border-line)] p-2 text-[var(--text-main)] font-sans focus:outline-none focus:border-[#1f5ca9]">
+                <option value="phuc">PHÚC TRẦN — Software Engineer (CTU • C# Clean Arch • 96.4%)</option>
+                <option value="fresher">Candidate B — Fresher Frontend React (64.2%)</option>
+              </select>
+            </div>
+
+            <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)]">
+              <label class="block text-[var(--text-dim)] text-[10px] font-bold mb-1">MÔ TẢ CÔNG VIỆC MỤC TIÊU (JOB DESCRIPTION):</label>
+              <div class="p-2 bg-[var(--bg-card)] border border-[var(--border-line)] text-[var(--text-main)] font-sans text-xs">
+                Senior Backend Specialist (C# ASP.NET Core, CQRS, PostgreSQL, High-Scale)
+              </div>
+            </div>
+          </div>
+
+          <div id="smarthire-terminal" class="bg-slate-950 p-4 border border-slate-800 font-mono text-xs text-slate-300 min-h-[110px] space-y-1">
+            <div class="text-slate-500">[READY] Bộ token CV đã sẵn sàng để đối sánh cosine vector. Nhấp nút phía trên...</div>
+          </div>
+
+          <div id="smarthire-result" class="hidden p-4 bg-blue-900/10 border border-blue-500/40 space-y-3 font-mono text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-[#1f5ca9]">ATS COMPLIANCE SCORE:</span>
+              <span id="smarthire-score-val" class="text-xl font-black text-[#1f5ca9]">96.4%</span>
+            </div>
+            <div class="w-full bg-slate-800 h-2">
+              <div id="smarthire-score-bar" class="bg-[#1f5ca9] h-2 transition-all duration-700" style="width: 96.4%;"></div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-[11px] pt-1">
+              <div class="p-2 bg-[var(--bg-card)] border border-[var(--border-line)]">
+                <div class="text-[var(--text-dim)] text-[9px]">C# ASP.NET Core</div>
+                <div class="font-bold text-[#1f5ca9]">98% (KHỚP HOÀN TOÀN)</div>
+              </div>
+              <div class="p-2 bg-[var(--bg-card)] border border-[var(--border-line)]">
+                <div class="text-[var(--text-dim)] text-[9px]">Clean Architecture</div>
+                <div class="font-bold text-[#1f5ca9]">95% (CHUẨN DOANH NGHIỆP)</div>
+              </div>
+              <div class="p-2 bg-[var(--bg-card)] border border-[var(--border-line)]">
+                <div class="text-[var(--text-dim)] text-[9px]">PostgreSQL Indexing</div>
+                <div class="font-bold text-[#1f5ca9]">94% (TRUY VẤN SUB-50MS)</div>
+              </div>
+              <div class="p-2 bg-[var(--bg-card)] border border-[var(--border-line)]">
+                <div class="text-[var(--text-dim)] text-[9px]">Applied AI • LLM</div>
+                <div class="font-bold text-[#1f5ca9]">92% (GEMINI PIPELINE)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LAB 3: Nimdora Mathematical NIM Game AI Panel -->
+        <div id="sandbox-panel-nim" class="sandbox-panel corner-cross arch-card chamfer-diagonal p-6 border border-[var(--border-line)] bg-[var(--bg-card)] space-y-4 shadow-lg hidden">
+          <div class="flex items-center justify-between border-b border-[var(--border-line)] pb-3">
+            <div>
+              <h3 class="text-lg font-bold text-[var(--text-main)] font-mono" data-i18n="sandbox_nim_title">Đấu trí với AI Game Theory Engine (Định lý Bouton)</h3>
+              <p class="text-xs text-[var(--text-muted)] mt-0.5" data-i18n="sandbox_nim_desc">Chọn một đống và bốc 1, 2 hoặc 3 viên. Người bốc viên sỏi cuối cùng sẽ THẮNG!</p>
+            </div>
+            <button onclick="window.resetNimGame()" class="chamfer-btn px-3 py-1.5 bg-[var(--bg-surface)] hover:bg-[var(--bg-main)] text-[var(--text-main)] font-mono text-xs border border-[var(--border-line)]">
+              [ĐẶT LẠI VÁN MỚI]
+            </button>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4 font-mono text-center">
+            <div class="p-4 bg-[var(--bg-surface)] border border-[var(--border-line)] chamfer-tr">
+              <div class="text-[var(--text-muted)] text-xs" data-i18n="sandbox_nim_pile1">ĐỐNG 1</div>
+              <div id="sandbox-pile-0" class="text-3xl font-black text-[#1f5ca9] my-2">3</div>
+              <div class="flex justify-center gap-1">
+                <button onclick="window.nimTakeStone(0, 1)" class="px-2.5 py-1 bg-[var(--bg-card)] hover:bg-[#1f5ca9] hover:text-white text-xs text-[var(--text-main)] border border-[var(--border-line)]">-1</button>
+                <button onclick="window.nimTakeStone(0, 2)" class="px-2.5 py-1 bg-[var(--bg-card)] hover:bg-[#1f5ca9] hover:text-white text-xs text-[var(--text-main)] border border-[var(--border-line)]">-2</button>
+              </div>
+            </div>
+
+            <div class="p-4 bg-[var(--bg-surface)] border border-[var(--border-line)] chamfer-tr">
+              <div class="text-[var(--text-muted)] text-xs" data-i18n="sandbox_nim_pile2">ĐỐNG 2</div>
+              <div id="sandbox-pile-1" class="text-3xl font-black text-[#1f5ca9] my-2">4</div>
+              <div class="flex justify-center gap-1">
+                <button onclick="window.nimTakeStone(1, 1)" class="px-2.5 py-1 bg-[var(--bg-card)] hover:bg-[#1f5ca9] hover:text-white text-xs text-[var(--text-main)] border border-[var(--border-line)]">-1</button>
+                <button onclick="window.nimTakeStone(1, 2)" class="px-2.5 py-1 bg-[var(--bg-card)] hover:bg-[#1f5ca9] hover:text-white text-xs text-[var(--text-main)] border border-[var(--border-line)]">-2</button>
+                <button onclick="window.nimTakeStone(1, 3)" class="px-2.5 py-1 bg-[var(--bg-card)] hover:bg-[#1f5ca9] hover:text-white text-xs text-[var(--text-main)] border border-[var(--border-line)]">-3</button>
+              </div>
+            </div>
+
+            <div class="p-4 bg-[var(--bg-surface)] border border-[var(--border-line)] chamfer-tr">
+              <div class="text-[var(--text-muted)] text-xs" data-i18n="sandbox_nim_pile3">ĐỐNG 3</div>
+              <div id="sandbox-pile-2" class="text-3xl font-black text-[#1f5ca9] my-2">5</div>
+              <div class="flex justify-center gap-1">
+                <button onclick="window.nimTakeStone(2, 1)" class="px-2.5 py-1 bg-[var(--bg-card)] hover:bg-[#1f5ca9] hover:text-white text-xs text-[var(--text-main)] border border-[var(--border-line)]">-1</button>
+                <button onclick="window.nimTakeStone(2, 2)" class="px-2.5 py-1 bg-[var(--bg-card)] hover:bg-[#1f5ca9] hover:text-white text-xs text-[var(--text-main)] border border-[var(--border-line)]">-2</button>
+                <button onclick="window.nimTakeStone(2, 3)" class="px-2.5 py-1 bg-[var(--bg-card)] hover:bg-[#1f5ca9] hover:text-white text-xs text-[var(--text-main)] border border-[var(--border-line)]">-3</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 bg-slate-950 text-white border border-slate-800 font-mono text-xs flex items-center justify-between">
+            <span id="nim-sandbox-turn" class="text-sky-400 font-bold">Lượt của bạn (Người chơi)</span>
+            <span id="nim-sandbox-log" class="text-slate-400">Trạng thái khởi tạo: Nim-sum = 3 ^ 4 ^ 5 = 2. Nhấp nút -1, -2, -3 để đi nước cờ của bạn!</span>
+          </div>
+        </div>
+
+        <!-- LAB 4: NewsHub AI Digest Real-Time Stream Panel -->
+        <div id="sandbox-panel-news" class="sandbox-panel corner-cross arch-card chamfer-diagonal p-6 border border-[var(--border-line)] bg-[var(--bg-card)] space-y-4 shadow-lg hidden">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="text-lg font-bold text-[var(--text-main)] font-mono" data-i18n="sandbox_news_title">Pipeline tóm tắt tin tức tự động Gemini AI</h3>
+              <p class="text-xs text-[var(--text-muted)] mt-1" data-i18n="sandbox_news_desc">Chọn chủ đề tin tức để quan sát cách pipeline gọi API và trích xuất TL;DR 10 giây:</p>
+            </div>
+            <button id="newshub-ai-btn" onclick="window.runNewsHubAiSimulation()" class="chamfer-btn px-5 py-2.5 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold font-mono text-xs whitespace-nowrap shadow-md shadow-blue-500/20">
+              <span data-i18n="sandbox_news_btn">CHẠY PIPELINE GEMINI AI ➔</span>
+            </button>
+          </div>
+
+          <div id="newshub-ai-terminal" class="bg-slate-950 p-4 border border-slate-800 font-mono text-xs text-slate-300 min-h-[100px] space-y-1">
+            <div class="text-slate-500">[READY] Bản tin mẫu đã sẵn sàng gọi API Gemini. Nhấp nút phía trên...</div>
+          </div>
+
+          <div id="newshub-ai-result" class="hidden p-4 bg-blue-900/10 border border-blue-500/40 space-y-2 font-mono text-xs">
+            <div class="text-[#1f5ca9] font-bold flex items-center justify-between">
+              <span>✨ KẾT QUẢ TÓM TẮT TL;DR (BỞI GEMINI 1.5 PRO)</span>
+              <span class="text-slate-400 text-[10px]">Tokens: 142 • Latency: 280ms</span>
+            </div>
+            <ul class="space-y-1 text-[var(--text-muted)]">
+              <li>▹ Tối ưu hóa hiệu năng Clean Architecture trên nền ASP.NET Core 9.</li>
+              <li>▹ Kết nối trực tiếp mô hình ngôn ngữ lớn để tổng hợp tin tức tự động.</li>
+              <li>▹ Đánh chỉ mục PostgreSQL compound index trên Supabase giúp đọc tin dưới 50ms.</li>
+            </ul>
+            <div class="flex gap-2 pt-2 border-t border-[var(--border-line)] text-[10px]">
+              <span class="px-2 py-0.5 bg-blue-900/20 text-[#1f5ca9] font-bold">#DotNetCore</span>
+              <span class="px-2 py-0.5 bg-blue-900/20 text-[#1f5ca9] font-bold">#GeminiAPI</span>
+              <span class="px-2 py-0.5 bg-blue-900/20 text-[#1f5ca9] font-bold">#CleanArchitecture</span>
+            </div>
+          </div>
+        
+        </div>
+
+      </div>
+    </section>
+
+    <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="border-t border-[var(--border-line)] pt-8 space-y-8">
+        
+        <div class="flex items-center justify-between">
+          <div class="space-y-1">
+            <div class="text-xs font-mono text-[#1f5ca9] font-bold" data-i18n="projects_index">[DỰ ÁN THỰC CHIẾN]</div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-[var(--text-main)] tracking-tight" data-i18n="projects_title">
+              HỆ THỐNG ĐÃ PHÁT TRIỂN & XUẤT XƯỞNG
+            </h2>
+          </div>
+          <div class="text-xs font-mono text-[var(--text-dim)] hidden sm:block" data-i18n="projects_subtitle">
+            Mã nguồn thật, sản phẩm thật, giải quyết bài toán thật.
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- PROJECT 1: NewsHub -->
+          <div class="corner-cross arch-card chamfer-tr p-6 border border-[var(--border-line)] bg-[var(--bg-card)] flex flex-col justify-between shadow-md">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-[var(--border-line)] text-[10px] font-mono text-[var(--text-dim)] mb-4">
+                <span>PROJECT • 01</span>
+                <span class="text-[#1f5ca9] font-bold">CORE FULL-STACK & AI</span>
+              </div>
+
+              <h3 class="text-xl font-bold text-[var(--text-main)] font-mono mb-2" data-i18n="proj_newshub_name">
+                NEWSHUB — AI NEWS INTELLIGENCE
+              </h3>
+
+              <p class="text-xs text-[var(--text-muted)] leading-relaxed font-sans mb-4" data-i18n="proj_newshub_desc">
+                Nền tảng đọc báo thông minh giải quyết vấn đề quá tải thông tin. Tự động thu thập, trích xuất thực thể và tóm tắt 3 ý chính TL;DR bằng Gemini AI trong 10 giây.
+              </p>
+
+              <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)] font-mono text-[11px] text-[#1f5ca9] font-semibold mb-3" data-i18n="proj_newshub_tech">
+                C# ASP.NET Core • React • TypeScript • Supabase PostgreSQL • Gemini API
+              </div>
+
+              <div class="text-[10px] font-mono text-[var(--text-dim)] mb-4" data-i18n="proj_newshub_metric">
+                Xử lý tóm tắt &lt;350ms, Stateless JWT Auth, Clean Architecture.
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--border-line)] text-xs font-mono">
+              <button onclick="window.openCaseStudy('newshub')" class="text-[#1f5ca9] hover:underline font-bold" data-i18n="proj_btn_inspect">
+                [XEM BẢN VẼ KIẾN TRÚC]
+              </button>
+              <a href="https://github.com/phuctran1501/NewsHub" target="_blank" class="text-[var(--text-muted)] hover:text-[#1f5ca9]" data-i18n="proj_btn_github">
+                [MÃ NGUỒN GITHUB ↗]
+              </a>
+            </div>
+          </div>
+
+          <!-- PROJECT 2: CTU-Scheduler -->
+          <div class="corner-cross arch-card chamfer-tr p-6 border border-[var(--border-line)] bg-[var(--bg-card)] flex flex-col justify-between shadow-md">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-[var(--border-line)] text-[10px] font-mono text-[var(--text-dim)] mb-4">
+                <span>PROJECT • 02</span>
+                <span class="text-[#1f5ca9] font-bold">100+ USERS • CTU ECOSYSTEM</span>
+              </div>
+
+              <h3 class="text-xl font-bold text-[var(--text-main)] font-mono mb-2" data-i18n="proj_ctu_name">
+                CTU-SCHEDULER — TIMETABLE OPTIMIZER
+              </h3>
+
+              <p class="text-xs text-[var(--text-muted)] leading-relaxed font-sans mb-4" data-i18n="proj_ctu_desc">
+                Ứng dụng máy tính giải bài toán thỏa mãn ràng buộc (CSP), giúp hàng ngàn sinh viên Đại học Cần Thơ tự động lập thời khóa biểu không trùng lặp và kiểm tra sĩ số theo thời gian thực.
+              </p>
+
+              <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)] font-mono text-[11px] text-[#1f5ca9] font-semibold mb-3" data-i18n="proj_ctu_tech">
+                C# .NET • Constraint Satisfaction Solver • Realtime Class Scraper
+              </div>
+
+              <div class="text-[10px] font-mono text-[var(--text-dim)] mb-4" data-i18n="proj_ctu_metric">
+                100+ sinh viên CTU sử dụng, loại bỏ hoàn toàn xung đột giờ học.
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--border-line)] text-xs font-mono">
+              <button onclick="window.openCaseStudy('ctu')" class="text-[#1f5ca9] hover:underline font-bold" data-i18n="proj_btn_inspect">
+                [XEM BẢN VẼ KIẾN TRÚC]
+              </button>
+              <a href="https://github.com/phuctran1501/CTU-Scheduler" target="_blank" class="text-[var(--text-muted)] hover:text-[#1f5ca9]" data-i18n="proj_btn_github">
+                [MÃ NGUỒN GITHUB ↗]
+              </a>
+            </div>
+          </div>
+
+          <!-- PROJECT 3: SmartHire -->
+          <div class="corner-cross arch-card chamfer-tr p-6 border border-[var(--border-line)] bg-[var(--bg-card)] flex flex-col justify-between shadow-md">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-[var(--border-line)] text-[10px] font-mono text-[var(--text-dim)] mb-4">
+                <span>PROJECT • 03</span>
+                <span class="text-[#1f5ca9] font-bold">SE-PROJECT-CTU</span>
+              </div>
+
+              <h3 class="text-xl font-bold text-[var(--text-main)] font-mono mb-2" data-i18n="proj_smarthire_name">
+                SMARTHIRE — AI RECRUITMENT & ATS MATCHER
+              </h3>
+
+              <p class="text-xs text-[var(--text-muted)] leading-relaxed font-sans mb-4" data-i18n="proj_smarthire_desc">
+                Nền tảng tuyển dụng thông minh tích hợp bộ phân tích hồ sơ ứng viên theo chuẩn ATS. Tự động trích xuất kỹ năng, kinh nghiệm và tính toán trọng số tương thích với mô tả công việc (JD).
+              </p>
+
+              <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)] font-mono text-[11px] text-[#1f5ca9] font-semibold mb-3" data-i18n="proj_smarthire_tech">
+                Full-Stack Web • Natural Language Processing • ATS Scoring Engine
+              </div>
+
+              <div class="text-[10px] font-mono text-[var(--text-dim)] mb-4" data-i18n="proj_smarthire_metric">
+                SE Project CTU, tự động hóa quy trình sàng lọc hồ sơ cho nhà tuyển dụng.
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--border-line)] text-xs font-mono">
+              <button onclick="window.openCaseStudy('smarthire')" class="text-[#1f5ca9] hover:underline font-bold" data-i18n="proj_btn_inspect">
+                [XEM BẢN VẼ KIẾN TRÚC]
+              </button>
+              <a href="https://github.com/phuctran1501/SmartHire" target="_blank" class="text-[var(--text-muted)] hover:text-[#1f5ca9]" data-i18n="proj_btn_github">
+                [MÃ NGUỒN GITHUB ↗]
+              </a>
+            </div>
+          </div>
+
+          <!-- PROJECT 4: Nimdora -->
+          <div class="corner-cross arch-card chamfer-tr p-6 border border-[var(--border-line)] bg-[var(--bg-card)] flex flex-col justify-between shadow-md">
+            <div>
+              <div class="flex items-center justify-between pb-3 border-b border-[var(--border-line)] text-[10px] font-mono text-[var(--text-dim)] mb-4">
+                <span>PROJECT • 04</span>
+                <span class="text-[#1f5ca9] font-bold">GAME THEORY • DESKTOP APP</span>
+              </div>
+
+              <h3 class="text-xl font-bold text-[var(--text-main)] font-mono mb-2" data-i18n="proj_nimdora_name">
+                NIMDORA — MATHEMATICAL GAME THEORY ENGINE
+              </h3>
+
+              <p class="text-xs text-[var(--text-muted)] leading-relaxed font-sans mb-4" data-i18n="proj_nimdora_desc">
+                Ứng dụng máy tính mô phỏng trò chơi chiến thuật toán học NIM kết hợp bối cảnh không gian. Cài đặt thuật toán giải trạng thái tối ưu P-position và N-position dựa trên Định lý Bouton và phép toán XOR Nim-sum.
+              </p>
+
+              <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)] font-mono text-[11px] text-[#1f5ca9] font-semibold mb-3" data-i18n="proj_nimdora_stack">
+                TypeScript • Combinatorial Game Theory • Desktop Application
+              </div>
+
+              <div class="text-[10px] font-mono text-[var(--text-dim)] mb-4" data-i18n="proj_nimdora_metric">
+                Bộ máy AI chiến thuật hoàn hảo theo nguyên lý toán học tổ hợp.
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--border-line)] text-xs font-mono">
+              <button onclick="window.openCaseStudy('nimdora')" class="text-[#1f5ca9] hover:underline font-bold" data-i18n="proj_btn_inspect">
+                [XEM BẢN VẼ KIẾN TRÚC]
+              </button>
+              <a href="https://github.com/phuctran1501/Nimdora" target="_blank" class="text-[var(--text-muted)] hover:text-[#1f5ca9]" data-i18n="proj_btn_github">
+                [MÃ NGUỒN GITHUB ↗]
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section id="topology" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="border-t border-[var(--border-line)] pt-8 space-y-6">
+        
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <div class="space-y-1">
+            <div class="text-xs font-mono text-[#1f5ca9] font-bold" data-i18n="topo_index">[CẤU TRÚC HỆ THỐNG]</div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-[var(--text-main)] tracking-tight" data-i18n="topo_title">
+              SƠ ĐỒ LUỒNG DỮ LIỆU & KIẾN TRÚC
+            </h2>
+          </div>
+          <div class="text-xs font-mono text-[var(--text-dim)]" data-i18n="topo_subtitle">
+            Cách các thành phần giao tiếp trong hệ sinh thái kỹ thuật của tôi.
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 font-mono text-xs">
+          <div class="p-4 bg-[var(--bg-card)] border border-[var(--border-line)] chamfer-tr shadow-sm">
+            <div class="text-[var(--text-dim)] text-[10px]">LAYER 01</div>
+            <div class="text-[var(--text-main)] font-bold my-1" data-i18n="topo_client">CLIENT LAYER (REACT / TS)</div>
+            <div class="text-[var(--text-muted)] text-[11px]">Giao diện người dùng responsive, type-safety tuyệt đối với TypeScript, tốc độ phản hồi sub-16ms.</div>
+          </div>
+
+          <div class="p-4 bg-blue-900/15 border border-[#1f5ca9] chamfer-tr shadow-md">
+            <div class="text-[#1f5ca9] font-bold text-[10px]">LAYER 02 (CORE)</div>
+            <div class="text-[#1f5ca9] font-bold my-1" data-i18n="topo_api">WEB API (ASP.NET CORE)</div>
+            <div class="text-[var(--text-muted)] text-[11px]">Clean Architecture, CQRS pattern, MediatR dispatching, stateless JWT authentication, EF Core.</div>
+          </div>
+
+          <div class="p-4 bg-[var(--bg-card)] border border-[var(--border-line)] chamfer-tr shadow-sm">
+            <div class="text-[var(--text-dim)] text-[10px]">LAYER 03</div>
+            <div class="text-[var(--text-main)] font-bold my-1" data-i18n="topo_db">DATABASE LAYER (POSTGRESQL)</div>
+            <div class="text-[var(--text-muted)] text-[11px]">Supabase PostgreSQL với compound indexes trên ngày đăng và từ khóa ngữ nghĩa, tính toàn vẹn dữ liệu.</div>
+          </div>
+
+          <div class="p-4 bg-[var(--bg-card)] border border-[var(--border-line)] chamfer-tr shadow-sm">
+            <div class="text-[var(--text-dim)] text-[10px]">LAYER 04</div>
+            <div class="text-[var(--text-main)] font-bold my-1" data-i18n="topo_ai">AI PIPELINE (GEMINI 1.5)</div>
+            <div class="text-[var(--text-muted)] text-[11px]">Tự động trích xuất thực thể, tóm tắt TL;DR 10 giây, cơ chế retry exponential backoff và rate limiting.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    
+
+    <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="border-t border-[var(--border-line)] pt-8">
+        
+        <div class="corner-cross arch-card chamfer-diagonal p-8 sm:p-10 border border-[var(--border-line)] bg-[var(--bg-card)] shadow-xl">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <div class="lg:col-span-6 space-y-5">
+              <div class="text-xs font-mono text-[#1f5ca9] font-bold" data-i18n="contact_index">[KÊNH TRUYỀN DỮ LIỆU]</div>
+              <h2 class="text-3xl font-extrabold text-[var(--text-main)] tracking-tight" data-i18n="contact_title">
+                KẾT NỐI VÀ HỢP TÁC TRỰC TIẾP
+              </h2>
+              <p class="text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed font-sans" data-i18n="contact_subtitle">
+                Sẵn sàng đón nhận các cơ hội việc làm, thực tập và dự án kỹ thuật chuyên sâu.
+              </p>
+
+              <div class="space-y-3 pt-2 font-mono text-xs">
+                
+                <div class="p-3.5 bg-[var(--bg-surface)] border border-[var(--border-line)] flex items-center justify-between chamfer-tr">
+                  <div>
+                    <div class="text-[10px] text-[var(--text-dim)] font-bold" data-i18n="contact_email_lbl">ĐỊA CHỈ EMAIL CHÍNH THỨC:</div>
+                    <div class="text-[#1f5ca9] font-bold mt-0.5">phuctran1501@gmail.com</div>
+                  </div>
+                  <button onclick="window.copyEmail()" class="chamfer-btn px-3 py-1.5 bg-[var(--bg-card)] border border-[var(--border-line)] text-[var(--text-main)] hover:text-[#1f5ca9] transition font-bold" data-i18n="contact_copy">
+                    [SAO CHÉP EMAIL]
+                  </button>
+                </div>
+
+                <div class="p-3.5 bg-[var(--bg-surface)] border border-[var(--border-line)] flex items-center justify-between chamfer-tr">
+                  <div>
+                    <div class="text-[10px] text-[var(--text-dim)] font-bold" data-i18n="contact_github_lbl">TÀI KHOẢN GITHUB:</div>
+                    <div class="text-[var(--text-main)] font-bold mt-0.5">github.com/phuctran1501</div>
+                  </div>
+                  <a href="https://github.com/phuctran1501" target="_blank" class="chamfer-btn px-3 py-1.5 bg-[var(--bg-card)] border border-[var(--border-line)] text-[var(--text-main)] hover:text-[#1f5ca9] transition font-bold">
+                    [TRUY CẬP ↗]
+                  </a>
+                </div>
+
+                <div class="p-3.5 bg-[var(--bg-surface)] border border-[var(--border-line)] chamfer-tr">
+                  <div class="text-[10px] text-[var(--text-dim)] font-bold" data-i18n="contact_loc_lbl">ĐỊA BÀN HOẠT ĐỘNG:</div>
+                  <div class="text-[var(--text-main)] mt-0.5" data-i18n="contact_loc_val">Cần Thơ, Việt Nam (Linh hoạt: Remote • On-site • Hybrid)</div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Direct Message Form with Chamfer Cuts -->
+            <div class="lg:col-span-6 bg-[var(--bg-surface)] p-6 border border-[var(--border-line)] chamfer-diagonal">
+              <form id="contact-form" class="space-y-4 font-mono text-xs">
+                <div>
+                  <label class="block text-[var(--text-main)] font-bold mb-1" data-i18n="contact_form_name">HỌ VÀ TÊN • ĐƠN VỊ</label>
+                  <input id="form-name" type="text" required class="w-full px-3 py-2.5 bg-[var(--bg-card)] border border-[var(--border-line)] text-[var(--text-main)] focus:outline-none focus:border-[#1f5ca9] font-sans">
+                </div>
+
+                <div>
+                  <label class="block text-[var(--text-main)] font-bold mb-1" data-i18n="contact_form_email">ĐỊA CHỈ EMAIL LIÊN HỆ</label>
+                  <input id="form-email" type="email" required class="w-full px-3 py-2.5 bg-[var(--bg-card)] border border-[var(--border-line)] text-[var(--text-main)] focus:outline-none focus:border-[#1f5ca9] font-sans">
+                </div>
+
+                <div>
+                  <label class="block text-[var(--text-main)] font-bold mb-1" data-i18n="contact_form_msg">NỘI DUNG TRAO ĐỔI • ĐỀ XUẤT DỰ ÁN</label>
+                  <textarea id="form-msg" rows="4" required class="w-full px-3 py-2.5 bg-[var(--bg-card)] border border-[var(--border-line)] text-[var(--text-main)] focus:outline-none focus:border-[#1f5ca9] font-sans"></textarea>
+                </div>
+
+                <button type="submit" class="chamfer-btn w-full py-3 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold tracking-wider transition shadow-md shadow-blue-500/20">
+                  <span data-i18n="contact_form_send">GỬI BẢN TIN TRUYỀN DỮ LIỆU ➔</span>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="border-t border-[var(--border-line)] bg-[var(--bg-card)] py-10 relative z-10 text-xs font-mono text-[var(--text-dim)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <img src="https://www.ctu.edu.vn/images/upload/logo.png" alt="CTU" class="w-5 h-5 object-contain">
+        <span data-i18n="footer_text">TRẦN PHÚC — KỸ THUẬT PHẦN MỀM — ĐẠI HỌC CẦN THƠ (CTU).</span>
+      </div>
+      <div>
+        <span data-i18n="footer_rights">BẢN QUYỀN MÃ NGUỒN © 2026 PHUCTRAN1501.</span>
+      </div>
+    </div>
+  </footer>
+
+    <!-- ================= SPATIAL RADAR HUD & CONTROLS ================= -->
+  <aside id="spatial-radar-hud" class="fixed bottom-5 right-5 z-40 hidden sm:flex flex-col gap-2 p-3 radar-hud chamfer-diagonal select-none text-xs font-mono transition-all duration-200">
+    <div class="flex items-center justify-between gap-3 border-b border-[var(--border-line)] pb-1 text-[10px] text-[var(--text-dim)]">
+      <span class="text-[#1f5ca9] font-bold shrink-0 tracking-wider" data-i18n="spatial_radar_title">RADAR HUD</span>
+      <div class="flex items-center gap-1 shrink-0">
+        <button id="radar-origin-btn" onclick="window.uiEngine && window.uiEngine.resetOrigin()" class="hover:text-[#1f5ca9] text-[9px] font-mono font-bold px-1.5 py-0.5 border border-[var(--border-line)] bg-[var(--bg-surface)] hover:border-[#1f5ca9] shrink-0" title="Về tọa độ gốc / Đầu trang">[0,0]</button>
+        <button id="radar-min-btn" onclick="window.toggleRadarMinimize()" class="hover:text-[#1f5ca9] text-[10px] font-mono font-bold px-1.5 py-0.5 border border-[var(--border-line)] bg-[var(--bg-surface)] hover:border-[#1f5ca9] shrink-0" title="Thu nhỏ / Phóng to Radar">_</button>
+      </div>
+    </div>
+    
+    <!-- Collapsible Radar Body -->
+    <div id="radar-hud-body" class="flex flex-col gap-2 transition-all duration-200">
+      <!-- Miniature Node Map Box (160 x 120) -->
+      <div class="relative w-40 h-28 bg-slate-950/90 border border-[var(--border-line)] overflow-hidden">
+        <!-- Container for dynamic node pins -->
+        <div id="radar-nodes-container" class="absolute inset-0"></div>
+        
+        <!-- Camera Frustum Box -->
+        <div id="radar-camera-frustum" class="absolute border-2 border-sky-400 bg-sky-400/20 pointer-events-none transition-none" style="left: 0px; top: 0px; width: 40px; height: 30px;"></div>
+      </div>
+
+      <!-- Zoom & Reset Buttons -->
+      <div class="flex items-center justify-between gap-1 pt-1 border-t border-[var(--border-line)] text-[10px]">
+        <button onclick="window.uiEngine && window.uiEngine.zoomIn()" class="px-2 py-0.5 bg-[var(--bg-surface)] border border-[var(--border-line)] hover:border-[#1f5ca9] text-[#1f5ca9] font-bold" title="Phóng to / Lên trên">+</button>
+        <button onclick="window.uiEngine && window.uiEngine.zoomOut()" class="px-2 py-0.5 bg-[var(--bg-surface)] border border-[var(--border-line)] hover:border-[#1f5ca9] text-[#1f5ca9] font-bold" title="Thu nhỏ / Xuống dưới">-</button>
+        <button onclick="window.uiEngine && window.uiEngine.resetOrigin()" class="flex-1 px-2 py-0.5 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold text-center" data-i18n="spatial_radar_reset">TÂM ĐIỂM (0,0)</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= FLOATING MINI CASSETTE WALKMAN HUD ================= -->
+  <aside id="floating-audio-dock" class="fixed bottom-4 left-4 z-40 flex flex-col gap-2 p-3 bg-[var(--bg-card)]/95 border border-[#1f5ca9] chamfer-diagonal shadow-2xl backdrop-blur-md spotlight-card w-80 sm:w-96 select-none transition-all duration-200">
+    <!-- Walkman Header Bar -->
+    <div class="flex items-center justify-between border-b border-[var(--border-line)] pb-1.5 font-mono text-[10px]">
+      <div class="flex items-center gap-1.5 cursor-pointer" onclick="window.toggleWalkmanMinimize()" title="Nhấp để thu nhỏ / phóng to Walkman">
+        <span class="px-1.5 py-0.5 bg-[#1f5ca9] text-white font-bold tracking-wider text-[9px]">WALKMAN</span>
+        <span class="text-[var(--text-dim)] font-semibold hidden xs:inline sm:inline">TP-26 STEREO</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <!-- Minimized Compact Playback Controls -->
+        <div id="walkman-mini-controls" class="hidden items-center gap-2">
+          <button id="walkman-mini-play-btn" onclick="window.hiFiDeck && window.hiFiDeck.toggle(); event.stopPropagation();" class="px-2 py-0.5 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold text-[9px] chamfer-btn" title="Phát / Tạm dừng">
+            <span id="walkman-mini-icon">▶</span>
+          </button>
+          <span class="text-[10px] text-[var(--text-main)] font-semibold truncate max-w-[120px]">xương rồng (intro)</span>
+        </div>
+
+        <span id="walkman-time-label" class="text-[#1f5ca9] font-bold font-mono">00:00 / 04:05</span>
+        <a href="#audio-deck-section" title="Mở Băng Từ Gốc" class="text-[var(--text-dim)] hover:text-[#1f5ca9] font-mono text-[9px] transition">↗ DECK</a>
+        <button id="walkman-min-btn" onclick="window.toggleWalkmanMinimize()" class="hover:text-[#1f5ca9] text-[10px] font-mono font-bold px-1.5 py-0.5 border border-[var(--border-line)] bg-[var(--bg-surface)] hover:border-[#1f5ca9] shrink-0" title="Thu nhỏ / Phóng to Walkman">_</button>
+      </div>
+    </div>
+
+    <!-- Walkman Full Body (collapsible) -->
+    <div id="walkman-dock-body" class="flex flex-col gap-2 transition-all duration-200">
+      <!-- Walkman Cassette Window & Controls -->
+      <div class="flex items-center gap-2.5 py-0.5">
+        <!-- Mini Cassette Deck Window with Dual Spinning Reels -->
+        <div class="flex items-center justify-center gap-2 px-2 py-1.5 bg-slate-950 border border-[#1f5ca9]/60 shrink-0">
+          <!-- Reel 1 -->
+          <div class="mini-cassette-reel w-5 h-5 border border-dashed border-sky-400 flex items-center justify-center">
+            <div class="w-1.5 h-1.5 bg-[#1f5ca9]"></div>
+          </div>
+          <!-- Tape connector -->
+          <div class="w-3 h-0.5 bg-sky-400/60"></div>
+          <!-- Reel 2 -->
+          <div class="mini-cassette-reel w-5 h-5 border border-dashed border-sky-400 flex items-center justify-center">
+            <div class="w-1.5 h-1.5 bg-[#1f5ca9]"></div>
+          </div>
+        </div>
+
+        <!-- Playback Controls -->
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button id="floating-music-btn" class="magnetic-btn chamfer-btn w-8 h-8 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-mono text-xs flex items-center justify-center shadow" title="Phát / Dừng">
+            <span id="floating-music-icon">▶</span>
+          </button>
+          <button id="walkman-mute-btn" class="magnetic-btn chamfer-btn w-8 h-8 bg-[var(--bg-surface)] hover:bg-[var(--bg-card)] border border-[var(--border-line)] text-xs flex items-center justify-center text-[var(--text-main)]" title="Tắt / Bật tiếng">
+            <span id="walkman-mute-icon">🔊</span>
+          </button>
+        </div>
+
+        <!-- Track Meta -->
+        <div class="flex-1 min-w-0 font-mono leading-tight pl-1">
+          <div class="text-[11px] font-bold text-[var(--text-main)] truncate">xương rồng (intro)</div>
+          <div class="text-[9px] text-[#1f5ca9] font-semibold truncate">Dangrangto • CTU Eng</div>
+        </div>
+      </div>
+
+      <!-- Clickable Scrubbing Progress Bar -->
+      <div id="walkman-progress-container" class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 cursor-pointer overflow-hidden relative group" title="Tua bài hát">
+        <div id="walkman-progress-bar" class="h-full bg-[#1f5ca9] group-hover:bg-sky-400 transition-all duration-100" style="width: 0%;"></div>
+      </div>
+
+      <!-- Real-Time Marquee Lyrics Ticker -->
+      <div class="flex items-center gap-2 px-2 py-1 bg-[var(--bg-surface)] border border-[var(--border-line)] font-mono text-[10px] overflow-hidden">
+        <span class="text-[#1f5ca9] font-bold shrink-0">♪</span>
+        <div class="overflow-hidden whitespace-nowrap w-full">
+          <span id="walkman-marquee-lyric" class="inline-block text-[var(--text-muted)] font-semibold transition-all duration-300 truncate w-full">
+            Bấm bất kỳ đâu để tự động mở âm thanh...
+          </span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+<!-- ================= CASE STUDY BREAKDOWN MODAL ================= -->
+  <div id="case-study-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+    <div class="relative w-full max-w-3xl max-h-[90vh] bg-[var(--bg-card)] border border-[#1f5ca9] p-6 sm:p-8 overflow-y-auto shadow-2xl chamfer-diagonal text-[var(--text-main)]" id="case-study-content">
+      <!-- Injected by main.js -->
+    </div>
+  </div>
+
+  <!-- ================= ENGINEERING DOSSIER MODAL (HERO PORTRAIT POPUP) ================= -->
+  <div id="dossier-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+    <div class="relative w-full max-w-4xl max-h-[90vh] bg-[var(--bg-card)] border border-[#1f5ca9] p-6 sm:p-8 overflow-y-auto shadow-2xl chamfer-diagonal space-y-6 text-[var(--text-main)]">
+      
+      <div class="flex items-start justify-between border-b border-[var(--border-line)] pb-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 text-xs font-mono bg-blue-900/20 text-[#1f5ca9] border border-blue-500/30 mb-2 font-bold">
+            <span>ENGINEER_DOSSIER • CONFIDENTIAL_PROFILE</span>
+          </div>
+          <h3 class="text-2xl font-bold font-mono text-[var(--text-main)]" data-i18n="dossier_modal_title">HỒ SƠ NĂNG LỰC KỸ SƯ — PHÚC TRẦN</h3>
+          <p class="text-xs text-[#1f5ca9] font-mono font-semibold mt-0.5">SOFTWARE ENGINEERING UNDERGRADUATE — CAN THO UNIVERSITY</p>
+        </div>
+        <button onclick="window.closeDossierModal()" class="px-3 py-1.5 text-[var(--text-dim)] hover:text-[#1f5ca9] border border-[var(--border-line)] hover:border-[#1f5ca9] transition font-mono text-xs">
+          [ESC • CLOSE]
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <!-- Official GitHub Avatar in Modal -->
+        <div class="md:col-span-5 relative aspect-square border-2 border-[#1f5ca9] overflow-hidden bg-slate-900 chamfer-tr">
+          <img src="https://github.com/phuctran1501.png" onerror="this.onerror=null; this.src='assets/avatar.jpg';" alt="PHÚC TRẦN" class="w-full h-full object-cover">
+          <div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/80 text-[10px] font-mono text-[#1f5ca9] font-bold border border-[#1f5ca9]">
+            PHÚC TRẦN (CTU)
+          </div>
+        </div>
+
+        <!-- Credentials & Bio -->
+        <div class="md:col-span-7 space-y-4 font-mono text-xs">
+          <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)]">
+            <div class="text-[#1f5ca9] font-bold text-[10px]">CHUYÊN NGÀNH CHÍNH — MAJOR</div>
+            <div class="text-[var(--text-main)] font-bold text-sm mt-0.5">Kỹ thuật Phần mềm (Software Engineering)</div>
+            <div class="text-[var(--text-muted)] text-[11px]">Trường Công nghệ Thông tin & Truyền thông — Đại học Cần Thơ</div>
+          </div>
+
+          <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)]">
+            <div class="text-[#1f5ca9] font-bold text-[10px]">ĐẶC TRƯNG KỸ THUẬT — CORE EXPERTISE</div>
+            <div class="text-[var(--text-main)] font-bold mt-1">
+              Backend Systems (C# .NET Core, Clean Architecture, CQRS) • Constraint Satisfaction Solving • Database Performance (PostgreSQL) • LLM Integration
+            </div>
+          </div>
+
+          <div class="p-3 bg-[var(--bg-surface)] border border-[var(--border-line)]">
+            <div class="text-[#1f5ca9] font-bold text-[10px]">DỰ ÁN NỔI BẬT NHẤT — FLAGSHIP IMPACT</div>
+            <div class="text-[var(--text-muted)] mt-1">
+              CTU-Scheduler: Tác giả giải pháp xếp thời khóa biểu thông minh cho 100+ sinh viên Đại học Cần Thơ, loại bỏ xung đột giờ học.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-4 border-t border-[var(--border-line)]">
+        <a href="https://github.com/phuctran1501" target="_blank" class="chamfer-btn px-5 py-2.5 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold font-mono text-xs">
+          GHÉ THĂM GITHUB CỦA TÔI ↗
+        </a>
+        <button onclick="window.closeDossierModal()" class="chamfer-btn px-4 py-2 bg-[var(--bg-surface)] text-[var(--text-main)] hover:text-[#1f5ca9] border border-[var(--border-line)] font-mono text-xs">
+          ĐÓNG HỒ SƠ
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= TOAST NOTIFICATION ================= -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-200 pointer-events-none">
+    <div class="px-4 py-2.5 bg-[var(--bg-card)] border border-[#1f5ca9] text-[#1f5ca9] font-mono text-xs shadow-xl flex items-center gap-2">
+      <span id="toast-msg" data-i18n="contact_copied">ĐÃ SAO CHÉP EMAIL VÀO BỘ NHỚ TẠM!</span>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/i18n.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/spatial.js"></script>
+
+</body>
+</html>

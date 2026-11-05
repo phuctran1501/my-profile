@@ -1,0 +1,550 @@
+/* 
+  PHÚC TRẦN (phuctran1501) — Architectural Engineering Portfolio
+  Can Tho University (CTU) Theme with Dark / Light Mode Support
+  Zero Bo Góc • Avant-Garde Chamfered Polygons • Parallax 3D Perspective • Anti-AI-Slop
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --ctu-blue: #1f5ca9;
+  --ctu-blue-hover: #266dc4;
+  --ctu-blue-dark: #123d73;
+  --font-main: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Light Mode (Toned down, non-glaring slate) */
+  --bg-main: #edf2f7;
+  --bg-card: #ffffff;
+  --bg-surface: #f7fafc;
+  --border-line: rgba(31, 92, 169, 0.22);
+  --border-focus: #1f5ca9;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #64748b;
+  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  --spotlight-glow: rgba(31, 92, 169, 0.14);
+}
+
+html.dark {
+  /* Dark Mode (CTU Deep Midnight Navy, elegant & easy on eyes) */
+  --bg-main: #071120;
+  --bg-card: #0c1c33;
+  --bg-surface: #102442;
+  --border-line: rgba(31, 92, 169, 0.45);
+  --border-focus: #38bdf8;
+  --text-main: #f1f5f9;
+  --text-muted: #cbd5e1;
+  --text-dim: #94a3b8;
+  --card-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.5);
+  --spotlight-glow: rgba(56, 189, 248, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  border-radius: 0 !important; /* STRICT ENFORCEMENT: Zero bo góc */
+}
+
+html {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background-color: var(--ctu-blue);
+  color: #ffffff;
+}
+
+/* Custom Blueprint Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+  border-left: 1px solid var(--border-line);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ctu-blue);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ctu-blue-hover);
+}
+
+/* ================= AVANT-GARDE ANGULAR CHAMFERS ================= */
+.chamfer-tr {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+}
+
+.chamfer-bl-tr {
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+.chamfer-diagonal {
+  clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+}
+
+.chamfer-all {
+  clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
+}
+
+.chamfer-btn {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, filter 0.2s ease;
+  position: relative;
+  will-change: transform;
+}
+.chamfer-btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 16px rgba(31, 92, 169, 0.35);
+}
+
+/* ================= SPOTLIGHT BORDER EFFECT ================= */
+.spotlight-card,
+.arch-card {
+  position: relative;
+}
+.spotlight-card::before,
+.arch-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(380px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), var(--spotlight-glow), transparent 75%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+.spotlight-card:hover::before,
+.arch-card:hover::before {
+  opacity: 1;
+}
+
+/* Ensure contents are clickable above spotlight overlay */
+.spotlight-card > *,
+.arch-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ================= MAGNETIC HOVER BUTTONS ================= */
+.magnetic-btn {
+  will-change: transform;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, filter 0.2s ease;
+}
+.magnetic-btn:hover {
+  filter: brightness(1.12);
+  box-shadow: 0 4px 16px rgba(31, 92, 169, 0.35);
+}
+
+/* Architectural Panels with Theme Awareness */
+.arch-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-line);
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--card-shadow);
+}
+.arch-card:hover {
+  border-color: var(--border-focus);
+}
+
+/* Architectural Corner Crosshairs */
+.corner-cross {
+  position: relative;
+}
+.corner-cross::before,
+.corner-cross::after {
+  content: '+';
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ctu-blue);
+  line-height: 1;
+  pointer-events: none;
+  font-weight: bold;
+}
+.corner-cross::before {
+  top: -7px;
+  left: -7px;
+}
+.corner-cross::after {
+  bottom: -7px;
+  right: -7px;
+}
+
+/* ================= 3D HERO PORTRAIT STAGE ================= */
+.hero-stage-container {
+  perspective: 1200px;
+}
+
+.hero-stage-card {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  position: relative;
+}
+
+.hero-portrait-frame {
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--ctu-blue);
+  background: #0d2c54;
+}
+
+/* Watermark typography */
+.stroke-watermark {
+  -webkit-text-stroke: 1.5px rgba(31, 92, 169, 0.25);
+  color: transparent;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* Scanning Laser Animation in CTU Blue */
+@keyframes laserScan {
+  0% { top: 0%; opacity: 0.9; }
+  50% { opacity: 1; }
+  100% { top: 100%; opacity: 0.2; }
+}
+.scanner-laser {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, #1f5ca9, transparent);
+  box-shadow: 0 0 12px #1f5ca9;
+  animation: laserScan 2.6s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Audio Cassette Reel Rotation */
+@keyframes spin-reel {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-reel {
+  animation: spin-reel 2.4s linear infinite;
+}
+
+.mini-reel-spin {
+  animation: spin-reel 1.8s linear infinite;
+}
+
+/* Dynamic Equalizer Visualizer Bars */
+.spectrum-bar {
+  transition: height 0.08s ease;
+}
+
+/* Lyrics Container (Controlled local scrolling without page jump) */
+.lyrics-scroll-box {
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+}
+.lyric-line {
+  transition: all 0.2s ease;
+}
+.lyric-line.active-lyric {
+  color: #1f5ca9;
+  font-weight: 700;
+  background-color: rgba(31, 92, 169, 0.12);
+  border-left: 3px solid #1f5ca9;
+}
+html.dark .lyric-line.active-lyric {
+  color: #38bdf8;
+  background-color: rgba(56, 189, 248, 0.15);
+  border-left: 3px solid #38bdf8;
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+  background-color: rgba(5, 12, 24, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+/* Floating Audio Unlock Banner Pulse */
+@keyframes bannerGlow {
+  0%, 100% { border-color: rgba(31, 92, 169, 0.4); box-shadow: 0 4px 15px rgba(31, 92, 169, 0.15); }
+  50% { border-color: rgba(31, 92, 169, 0.9); box-shadow: 0 4px 25px rgba(31, 92, 169, 0.35); }
+}
+.banner-pulse {
+  animation: bannerGlow 2s infinite ease-in-out;
+}
+
+/* ================= EXTENSIBLE MULTI-UI ENGINE ================= */
+
+/* Radar HUD: Universal across all modes */
+#spatial-radar-hud {
+  display: flex !important;
+  backdrop-filter: blur(14px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-line);
+  box-shadow: var(--card-shadow);
+  z-index: 45;
+  border-radius: 0 !important;
+}
+
+@media (max-width: 639px) {
+  #spatial-radar-hud {
+    display: none !important;
+  }
+}
+
+.radar-node-pin {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  border-radius: 0 !important;
+}
+.radar-node-pin:hover,
+.radar-node-pin.active {
+  background-color: #38bdf8 !important;
+  color: #071120 !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 10px #38bdf8;
+  font-weight: bold;
+}
+
+#radar-camera-frustum {
+  border: 1.5px solid #1f5ca9;
+  background-color: rgba(31, 92, 169, 0.2);
+  pointer-events: none;
+  position: absolute;
+  border-radius: 0 !important;
+  will-change: transform, left, top, width, height;
+}
+html.dark #radar-camera-frustum {
+  border-color: #38bdf8;
+  background-color: rgba(56, 189, 248, 0.22);
+}
+
+/* Connecting Vector Bus Cables */
+#spatial-connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bus-wire {
+  stroke: rgba(31, 92, 169, 0.45);
+  stroke-width: 2px;
+  stroke-dasharray: 6 6;
+  animation: busPulse 15s linear infinite;
+}
+html.dark .bus-wire {
+  stroke: rgba(56, 189, 248, 0.45);
+}
+
+@keyframes busPulse {
+  to {
+    stroke-dashoffset: -120;
+  }
+}
+
+/* ---------------- 1. MODE: SPATIAL CANVAS (BẢN ĐỒ KHÔNG GIAN) ---------------- */
+body.mode-spatial,
+body.spatial-canvas-active {
+  overflow: hidden !important;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  user-select: none;
+}
+
+body.mode-spatial #spatial-viewport,
+body.spatial-canvas-active #spatial-viewport {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+}
+
+body.mode-spatial #spatial-viewport.is-dragging,
+body.spatial-canvas-active #spatial-viewport.is-dragging {
+  cursor: grabbing !important;
+}
+
+body.mode-spatial #spatial-world,
+body.spatial-canvas-active #spatial-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+body.mode-spatial .spatial-node,
+body.spatial-canvas-active .spatial-node {
+  position: absolute !important;
+  margin: 0 !important;
+  width: 1150px;
+  max-width: 92vw;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+body.mode-spatial .spatial-node:hover,
+body.mode-spatial .spatial-node.spatial-node-active,
+body.spatial-canvas-active .spatial-node:hover,
+body.spatial-canvas-active .spatial-node.spatial-node-active {
+  box-shadow: 0 0 35px rgba(31, 92, 169, 0.38) !important;
+  border-color: #38bdf8 !important;
+}
+
+body.mode-spatial #spatial-connections,
+body.spatial-canvas-active #spatial-connections {
+  display: block;
+}
+
+/* ---------------- 2. MODE: LINEAR FLOW (CUỘN TRUYỀN THỐNG) ---------------- */
+body.mode-linear {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  min-height: 100vh;
+  position: static !important;
+  user-select: auto;
+}
+
+body.mode-linear #spatial-viewport {
+  width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+  position: static !important;
+  cursor: default !important;
+}
+
+body.mode-linear #spatial-world {
+  position: static !important;
+  transform: none !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
+body.mode-linear .spatial-node {
+  position: static !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 5rem !important;
+  width: 100% !important;
+  max-width: 80rem !important;
+  left: auto !important;
+  top: auto !important;
+}
+
+body.mode-linear #spatial-connections {
+  display: none !important;
+}
+
+/* ---------------- 3. MODE: CYBER CONVEYOR (BĂNG CHUYỀN RAY) ---------------- */
+body.mode-conveyor {
+  overflow: hidden !important;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  user-select: none;
+}
+
+body.mode-conveyor #spatial-viewport {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  position: relative;
+  cursor: grab;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #1f5ca9 transparent;
+}
+
+body.mode-conveyor #spatial-viewport.is-dragging {
+  cursor: grabbing !important;
+}
+
+body.mode-conveyor #spatial-world {
+  position: static !important;
+  transform: none !important;
+  height: 100vh;
+  width: max-content;
+}
+
+body.mode-conveyor #spatial-world > main {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 3.5rem !important;
+  padding: 5.5rem 5rem 3.5rem 5rem !important;
+  width: max-content !important;
+  height: 100vh !important;
+  align-items: stretch !important;
+  margin: 0 !important;
+}
+
+body.mode-conveyor .spatial-node {
+  position: static !important;
+  flex-shrink: 0 !important;
+  width: 86vw !important;
+  max-width: 1100px !important;
+  height: calc(100vh - 9rem) !important;
+  overflow-y: auto !important;
+  margin: 0 !important;
+  left: auto !important;
+  top: auto !important;
+  padding: 1.5rem !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-line) !important;
+}
+
+body.mode-conveyor #spatial-connections {
+  display: none !important;
+}
+
+/* ================= HUD MINIMIZATION STYLES ================= */
+
+/* Radar HUD minimized state */
+#spatial-radar-hud.is-minimized {
+  padding: 0.4rem 0.65rem !important;
+  gap: 0 !important;
+  width: auto !important;
+}
+
+#spatial-radar-hud.is-minimized #radar-hud-body {
+  display: none !important;
+}
+
+#spatial-radar-hud.is-minimized .border-b {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+/* Walkman HUD minimized state */
+#floating-audio-dock.is-minimized {
+  width: auto !important;
+  max-width: 360px !important;
+  padding: 0.4rem 0.65rem !important;
+  gap: 0 !important;
+}
+
+#floating-audio-dock.is-minimized #walkman-dock-body {
+  display: none !important;
+}
+
+#floating-audio-dock.is-minimized #walkman-mini-controls {
+  display: flex !important;
+}
+
+#floating-audio-dock.is-minimized .border-b {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
