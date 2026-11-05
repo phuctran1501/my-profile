@@ -47,6 +47,18 @@
   <!-- Interactive CTU Blue Wave Field Canvas -->
   <canvas id="geometric-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-60"></canvas>
 
+  <!-- ================= CYBER DATA COORDINATES CURSOR TRAIL ================= -->
+  <div id="cyber-cursor-hud" class="pointer-events-none fixed inset-0 z-50 overflow-hidden hidden md:block opacity-0" aria-hidden="true">
+    <div id="cursor-reticle">
+      <div id="cursor-center-dot"></div>
+    </div>
+    <div id="cursor-data-tag">
+      <span id="cursor-coords-val">X: 0 • Y: 0</span>
+      <span id="cursor-mode-badge">GRID</span>
+    </div>
+    <div id="cursor-click-ripples" class="absolute inset-0 pointer-events-none"></div>
+  </div>
+
   <!-- ================= TOP AUDIO UNLOCK BANNER ================= -->
   <aside id="audio-unlock-banner" class="fixed top-16 left-0 right-0 z-50 flex justify-center px-4 pointer-events-auto transition-all duration-300">
     <div class="banner-pulse px-4 py-2 bg-[var(--bg-card)] border border-[#1f5ca9] text-[#1f5ca9] font-mono text-xs flex items-center gap-3 chamfer-diagonal shadow-lg backdrop-blur-md">

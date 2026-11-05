@@ -724,6 +724,124 @@ window.initHUDMinState = function () {
   }
 };
 
+// ================= CYBER DATA COORDINATES CURSOR TRAIL =================
+class CyberCursorTrail {
+  constructor() {
+    this.hud = document.getElementById('cyber-cursor-hud');
+    this.reticle = document.getElementById('cursor-reticle');
+    this.dataTag = document.getElementById('cursor-data-tag');
+    this.coordsVal = document.getElementById('cursor-coords-val');
+    this.modeBadge = document.getElementById('cursor-mode-badge');
+    this.ripplesContainer = document.getElementById('cursor-click-ripples');
+
+    if (!this.hud || !this.reticle || !this.dataTag) return;
+
+    this.mouseX = window.innerWidth / 2;
+    this.mouseY = window.innerHeight / 2;
+    this.reticleX = this.mouseX;
+    this.reticleY = this.mouseY;
+    this.tagX = this.mouseX;
+    this.tagY = this.mouseY;
+    this.isVisible = false;
+    this.isLocked = false;
+
+    this.init();
+  }
+
+  init() {
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
+    window.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
+    window.addEventListener('mousedown', (e) => this.onMouseDown(e), { passive: true });
+    document.addEventListener('mouseleave', () => this.onMouseLeave());
+    document.addEventListener('mouseenter', () => this.onMouseEnter());
+
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target.closest('a, button, input, select, textarea, .chamfer-btn, .magnetic-btn, .radar-node-pin, .interactive-card');
+      this.setLocked(!!target);
+    }, { passive: true });
+
+    this.render();
+  }
+
+  onMouseMove(e) {
+    this.mouseX = e.clientX;
+    this.mouseY = e.clientY;
+    if (!this.isVisible) {
+      this.isVisible = true;
+      this.hud.style.opacity = '1';
+    }
+  }
+
+  onMouseEnter() {
+    this.isVisible = true;
+    this.hud.style.opacity = '1';
+  }
+
+  onMouseLeave() {
+    this.isVisible = false;
+    this.hud.style.opacity = '0';
+  }
+
+  onMouseDown(e) {
+    if (!this.ripplesContainer) return;
+    const ripple = document.createElement('div');
+    ripple.className = 'cyber-click-ripple';
+    ripple.style.left = `${e.clientX}px`;
+    ripple.style.top = `${e.clientY}px`;
+    this.ripplesContainer.appendChild(ripple);
+    setTimeout(() => {
+      ripple.remove();
+    }, 460);
+  }
+
+  setLocked(isLocked) {
+    this.isLocked = isLocked;
+    this.hud.classList.toggle('is-locked', isLocked);
+    if (this.modeBadge) {
+      if (isLocked) {
+        this.modeBadge.textContent = 'LOCK';
+      } else {
+        const mode = window.uiEngine ? window.uiEngine.currentMode : 'spatial';
+        this.modeBadge.textContent = mode.toUpperCase();
+      }
+    }
+  }
+
+  render() {
+    this.reticleX += (this.mouseX - this.reticleX) * 0.45;
+    this.reticleY += (this.mouseY - this.reticleY) * 0.45;
+    this.tagX += (this.mouseX - this.tagX) * 0.18;
+    this.tagY += (this.mouseY - this.tagY) * 0.18;
+
+    this.reticle.style.transform = `translate3d(${this.reticleX.toFixed(1)}px, ${this.reticleY.toFixed(1)}px, 0) translate(-50%, -50%)`;
+    this.dataTag.style.transform = `translate3d(${this.tagX.toFixed(1)}px, ${this.tagY.toFixed(1)}px, 0) translate(14px, 14px)`;
+
+    if (this.coordsVal) {
+      let xVal = Math.round(this.mouseX);
+      let yVal = Math.round(this.mouseY);
+      let prefix = 'X';
+
+      if (window.uiEngine) {
+        if (window.uiEngine.currentMode === 'spatial' && window.uiEngine.camera) {
+          const cam = window.uiEngine.camera;
+          xVal = Math.round((this.mouseX - cam.x) / cam.scale);
+          yVal = Math.round((this.mouseY - cam.y) / cam.scale);
+        } else if (window.uiEngine.currentMode === 'linear') {
+          yVal = Math.round(this.mouseY + window.scrollY);
+        } else if (window.uiEngine.currentMode === 'conveyor' && window.uiEngine.viewport) {
+          xVal = Math.round(this.mouseX + window.uiEngine.viewport.scrollLeft);
+          prefix = 'TRK';
+        }
+      }
+
+      this.coordsVal.textContent = `${prefix}: ${xVal} • Y: ${yVal}`;
+    }
+
+    requestAnimationFrame(() => this.render());
+  }
+}
+
 // Global Keyboard Handler (ESC to close modals)
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
@@ -743,6 +861,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initMagneticHover();
   window.initSpotlightBorders();
   window.initHUDMinState();
+  window.cyberCursor = new CyberCursorTrail();
 
   const mobileBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
