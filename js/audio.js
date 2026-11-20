@@ -1,6 +1,6 @@
 /**
- * High-Fidelity Audio Engine, Synced Lyrics & Mini Walkman HUD
- * Audio Source: "assets/xuong-rong-intro.mp3" ("xương rồng (intro)" by Dangrangto)
+ * High-Fidelity Audio Engine, Synchronized Lyrics & Real Web Audio Visualizer
+ * Soundtrack: "assets/xuong-rong-intro.mp3" ("xương rồng (intro)" by Dangrangto)
  * Can Tho University (CTU) Blue Edition
  */
 
@@ -40,26 +40,24 @@ class HiFiAudioEngine {
     this.isPlaying = false;
     this.audioUnlocked = false;
 
-    // UI Elements
+    // Island Dock Audio Controls
+    this.dockAudioBtn = document.getElementById('dock-audio-btn');
+    this.dockSoundwave = document.getElementById('dock-soundwave');
+    this.dockPlayIcon = document.getElementById('dock-play-icon');
+
+    // Lounge Audio Controls
     this.toggleBtn = document.getElementById('deck-toggle-btn');
-    this.headerBtn = document.getElementById('header-music-btn');
-    this.floatingBtn = document.getElementById('floating-music-btn');
-    this.unlockBanner = document.getElementById('audio-unlock-banner');
+    this.btnLabel = document.getElementById('deck-btn-label');
     this.timeDisplay = document.getElementById('deck-time-display');
     this.volumeSlider = document.getElementById('deck-volume-slider');
-    this.statusPill = document.getElementById('audio-status-pill');
-    this.reels = document.querySelectorAll('.cassette-reel');
-    this.miniReels = document.querySelectorAll('.mini-cassette-reel');
     this.visualizerBars = document.querySelectorAll('.spectrum-bar');
     this.lyricsContainer = document.getElementById('lyrics-scroll-container');
 
-    // Mini Walkman HUD Elements
-    this.walkmanLyric = document.getElementById('walkman-marquee-lyric');
-    this.walkmanTimeLabel = document.getElementById('walkman-time-label');
-    this.walkmanProgressBar = document.getElementById('walkman-progress-bar');
-    this.walkmanProgressContainer = document.getElementById('walkman-progress-container');
-    this.walkmanMuteBtn = document.getElementById('walkman-mute-btn');
-    this.walkmanMuteIcon = document.getElementById('walkman-mute-icon');
+    // Real Web Audio API Analyser
+    this.audioCtx = null;
+    this.analyser = null;
+    this.source = null;
+    this.dataArray = null;
 
     this.currentLyricIdx = -1;
     this.animFrameId = null;
@@ -74,85 +72,58 @@ class HiFiAudioEngine {
     }
 
     this.audio.volume = 0.8;
-
     this.renderLyrics();
 
-    // Toggle button listeners
+    // Listeners for Dock audio button
+    if (this.dockAudioBtn) {
+      this.dockAudioBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.toggle();
+      });
+    }
+
+    // Listeners for Lounge audio toggle button
     if (this.toggleBtn) {
       this.toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
         this.toggle();
       });
     }
 
-    if (this.headerBtn) {
-      this.headerBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.toggle();
-      });
-    }
-
-    if (this.floatingBtn) {
-      this.floatingBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.toggle();
-      });
-    }
-
+    // Volume Slider
     if (this.volumeSlider) {
       this.volumeSlider.addEventListener('input', (e) => {
         this.audio.volume = parseFloat(e.target.value);
       });
     }
 
-    // Mini Walkman progress bar scrubbing
-    if (this.walkmanProgressContainer) {
-      this.walkmanProgressContainer.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const rect = this.walkmanProgressContainer.getBoundingClientRect();
-        const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-        const dur = this.audio.duration || 245;
-        this.audio.currentTime = ratio * dur;
-        if (!this.isPlaying) this.play();
-      });
-    }
-
-    // Mini Walkman Mute Button
-    if (this.walkmanMuteBtn) {
-      this.walkmanMuteBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.toggleMute();
-      });
-    }
-
-    // First interaction unlocks audio
-    const triggerFirstAudioUnlock = () => {
+    // First user gesture unlocks audio
+    const unlockHandler = () => {
+      this.setupWebAudio();
       if (!this.audioUnlocked) {
         this.play();
       }
-      window.removeEventListener('click', triggerFirstAudioUnlock);
-      window.removeEventListener('keydown', triggerFirstAudioUnlock);
-      window.removeEventListener('touchstart', triggerFirstAudioUnlock);
+      window.removeEventListener('click', unlockHandler);
+      window.removeEventListener('keydown', unlockHandler);
+      window.removeEventListener('touchstart', unlockHandler);
     };
 
-    window.addEventListener('click', triggerFirstAudioUnlock, { once: true });
-    window.addEventListener('keydown', triggerFirstAudioUnlock, { once: true });
-    window.addEventListener('touchstart', triggerFirstAudioUnlock, { once: true });
+    window.addEventListener('click', unlockHandler, { once: true });
+    window.addEventListener('keydown', unlockHandler, { once: true });
+    window.addEventListener('touchstart', unlockHandler, { once: true });
 
-    // Audio native events
+    // Native audio events
     this.audio.addEventListener('timeupdate', () => {
       this.updateTimeDisplay();
       this.updateLyrics();
-      this.updateProgressBar();
     });
 
     this.audio.addEventListener('play', () => {
       this.isPlaying = true;
       this.audioUnlocked = true;
-      if (this.unlockBanner) {
-        this.unlockBanner.classList.add('opacity-0', 'pointer-events-none');
-        setTimeout(() => this.unlockBanner.remove(), 400);
-      }
+      this.setupWebAudio();
       this.updateUI(true);
       this.startVisualizer();
     });
@@ -169,13 +140,34 @@ class HiFiAudioEngine {
     });
   }
 
+  setupWebAudio() {
+    if (this.analyser) return;
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+
+      this.audioCtx = new AudioContextClass();
+      this.analyser = this.audioCtx.createAnalyser();
+      this.analyser.fftSize = 64;
+      this.analyser.smoothingTimeConstant = 0.75;
+
+      this.source = this.audioCtx.createMediaElementSource(this.audio);
+      this.source.connect(this.analyser);
+      this.analyser.connect(this.audioCtx.destination);
+      this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+    } catch (e) {
+      // Graceful fallback to synthetic rhythm
+      this.analyser = null;
+    }
+  }
+
   renderLyrics() {
     if (!this.lyricsContainer) return;
     this.lyricsContainer.innerHTML = '';
 
     SONG_LYRICS.forEach((item, idx) => {
       const line = document.createElement('div');
-      line.className = 'lyric-line py-1.5 px-3 text-xs font-mono cursor-pointer transition-colors duration-150 text-slate-500 hover:text-[#1f5ca9]';
+      line.className = 'py-2 px-3 text-xs font-mono cursor-pointer transition-colors duration-200 text-[var(--text-tertiary)] hover:text-[#1f5ca9] dark:hover:text-sky-400 rounded-lg';
       line.setAttribute('data-idx', idx);
       line.setAttribute('data-time', item.time);
       line.textContent = item.text;
@@ -204,14 +196,13 @@ class HiFiAudioEngine {
 
     if (activeIdx !== this.currentLyricIdx && activeIdx >= 0) {
       this.currentLyricIdx = activeIdx;
-      const activeText = SONG_LYRICS[activeIdx].text;
 
-      // Update main lyrics container
       if (this.lyricsContainer) {
-        const lines = this.lyricsContainer.querySelectorAll('.lyric-line');
-        lines.forEach((l, i) => {
+        const lines = this.lyricsContainer.children;
+        for (let i = 0; i < lines.length; i++) {
+          const l = lines[i];
           if (i === activeIdx) {
-            l.classList.add('active-lyric');
+            l.className = 'py-2 px-3 text-xs font-mono font-bold cursor-pointer transition-all duration-200 text-[#1f5ca9] dark:text-sky-400 bg-blue-900/10 rounded-lg scale-[1.01]';
             const container = this.lyricsContainer;
             const targetTop = l.offsetTop - container.offsetTop;
             container.scrollTo({
@@ -219,32 +210,10 @@ class HiFiAudioEngine {
               behavior: 'smooth'
             });
           } else {
-            l.classList.remove('active-lyric');
+            l.className = 'py-2 px-3 text-xs font-mono cursor-pointer transition-colors duration-200 text-[var(--text-tertiary)] hover:text-[#1f5ca9] dark:hover:text-sky-400 rounded-lg';
           }
-        });
+        }
       }
-
-      // Update Mini Walkman Marquee Ticker
-      if (this.walkmanLyric) {
-        this.walkmanLyric.textContent = activeText;
-      }
-    }
-  }
-
-  updateProgressBar() {
-    const cur = this.audio.currentTime || 0;
-    const dur = this.audio.duration || 245;
-    const pct = Math.min(100, (cur / dur) * 100);
-
-    if (this.walkmanProgressBar) {
-      this.walkmanProgressBar.style.width = `${pct}%`;
-    }
-  }
-
-  toggleMute() {
-    this.audio.muted = !this.audio.muted;
-    if (this.walkmanMuteIcon) {
-      this.walkmanMuteIcon.textContent = this.audio.muted ? '🔇' : '🔊';
     }
   }
 
@@ -254,18 +223,45 @@ class HiFiAudioEngine {
     const render = () => {
       if (!this.isPlaying) return;
 
-      const t = this.audio.currentTime;
-      const beat = (t % 0.631) / 0.631;
-      const kick = Math.pow(Math.max(0, 1 - beat * 2.2), 2);
-      const snare = Math.pow(Math.max(0, Math.sin(t * Math.PI * 3.16)), 3);
+      if (this.analyser && this.dataArray) {
+        this.analyser.getByteFrequencyData(this.dataArray);
 
-      if (this.visualizerBars && this.visualizerBars.length > 0) {
-        for (let i = 0; i < this.visualizerBars.length; i++) {
-          const bar = this.visualizerBars[i];
-          const phase = i * 0.45;
-          const osc = Math.sin(t * 12 + phase) * 0.35 + 0.65;
-          const height = Math.max(4, Math.floor((kick * 18 + snare * 12 + osc * 8)));
-          bar.style.height = `${Math.min(28, height)}px`;
+        // Update spectrum bars with real frequency bins
+        if (this.visualizerBars && this.visualizerBars.length > 0) {
+          for (let i = 0; i < this.visualizerBars.length; i++) {
+            const bar = this.visualizerBars[i];
+            const binIdx = Math.min(i * 2 + 1, this.dataArray.length - 1);
+            const val = this.dataArray[binIdx] || 0;
+            const height = Math.max(6, Math.floor((val / 255) * 56));
+            bar.style.height = `${height}px`;
+          }
+        }
+
+        // Update Dock mini soundwave bars
+        if (this.dockSoundwave) {
+          const bars = this.dockSoundwave.querySelectorAll('.soundwave-bar');
+          bars.forEach((b, idx) => {
+            const val = this.dataArray[idx * 3] || 0;
+            const h = Math.max(4, Math.floor((val / 255) * 16));
+            b.style.height = `${h}px`;
+          });
+        }
+
+      } else {
+        // Fallback rhythmic synthesis
+        const t = this.audio.currentTime;
+        const beat = (t % 0.631) / 0.631;
+        const kick = Math.pow(Math.max(0, 1 - beat * 2.2), 2);
+        const snare = Math.pow(Math.max(0, Math.sin(t * Math.PI * 3.16)), 3);
+
+        if (this.visualizerBars && this.visualizerBars.length > 0) {
+          for (let i = 0; i < this.visualizerBars.length; i++) {
+            const bar = this.visualizerBars[i];
+            const phase = i * 0.45;
+            const osc = Math.sin(t * 12 + phase) * 0.35 + 0.65;
+            const height = Math.max(6, Math.floor((kick * 36 + snare * 24 + osc * 16)));
+            bar.style.height = `${Math.min(56, height)}px`;
+          }
         }
       }
 
@@ -281,13 +277,16 @@ class HiFiAudioEngine {
       this.animFrameId = null;
     }
     if (this.visualizerBars) {
-      this.visualizerBars.forEach(bar => {
-        bar.style.height = '4px';
+      this.visualizerBars.forEach((bar, idx) => {
+        bar.style.height = `${(idx % 3 + 2) * 5}px`;
       });
     }
   }
 
   play() {
+    if (this.audioCtx && this.audioCtx.state === 'suspended') {
+      this.audioCtx.resume();
+    }
     const promise = this.audio.play();
     if (promise !== undefined) {
       promise
@@ -297,7 +296,7 @@ class HiFiAudioEngine {
           this.updateUI(true);
         })
         .catch((err) => {
-          console.log('Audio autoplay awaiting interaction:', err);
+          console.log('Audio playback pending user gesture:', err);
         });
     }
   }
@@ -325,38 +324,24 @@ class HiFiAudioEngine {
     if (this.timeDisplay) {
       this.timeDisplay.textContent = formatted;
     }
-    if (this.walkmanTimeLabel) {
-      this.walkmanTimeLabel.textContent = formatted;
-    }
   }
 
   updateUI(playing) {
-    this.reels.forEach(r => r.classList.toggle('animate-spin-reel', playing));
-    this.miniReels.forEach(r => r.classList.toggle('mini-reel-spin', playing));
-
     const isVi = (window.currentLang || 'vi') === 'vi';
-    const label = document.getElementById('deck-btn-label');
-    if (label) {
-      label.textContent = playing 
+
+    // Update Island Dock Soundwave and Play Icon
+    if (this.dockSoundwave) {
+      this.dockSoundwave.classList.toggle('soundwave-paused', !playing);
+    }
+    if (this.dockPlayIcon) {
+      this.dockPlayIcon.textContent = playing ? '⏸' : '▶';
+    }
+
+    // Update Lounge Button Label
+    if (this.btnLabel) {
+      this.btnLabel.textContent = playing 
         ? (isVi ? 'TẠM DỪNG' : 'PAUSE') 
-        : (isVi ? 'PHÁT NHẠC' : 'PLAY AUDIO');
-    }
-
-    if (this.statusPill) {
-      this.statusPill.textContent = playing 
-        ? (isVi ? 'ĐANG PHÁT' : 'PLAYING') 
-        : (isVi ? 'TẠM DỪNG' : 'PAUSED');
-      this.statusPill.classList.toggle('text-[#1f5ca9]', playing);
-      this.statusPill.classList.toggle('text-slate-400', !playing);
-    }
-
-    const floatIcon = document.getElementById('floating-music-icon');
-    if (floatIcon) {
-      floatIcon.textContent = playing ? '⏸' : '▶';
-    }
-    const miniIcon = document.getElementById('walkman-mini-icon');
-    if (miniIcon) {
-      miniIcon.textContent = playing ? '⏸' : '▶';
+        : (isVi ? 'PHÁT BẢN NHẠC' : 'PLAY AUDIO');
     }
   }
 }

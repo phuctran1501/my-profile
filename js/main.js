@@ -1,6 +1,7 @@
 /**
  * Phuc Tran Portfolio — Interactive Systems Engine & 4 Live Sandboxes
- * Can Tho University (CTU) Blue Theme — Zero "//" Marks
+ * World-Class Creative Engineering: Lenis, GSAP, Text Scramble, Command Palette (Ctrl+K), 3D Tilt & Micro-Audio
+ * Can Tho University (CTU) Blue Theme — 100% Bilingual (VI / EN)
  */
 
 // Architectural Case Studies Data (VI & EN)
@@ -16,14 +17,13 @@ const CASE_STUDIES = {
         "Bảo mật & Phân quyền: Sử dụng stateless JWT Authentication kết hợp Role-Based Access Control (RBAC).",
         "Tối ưu hóa Database: Thiết lập compound indices trên Supabase PostgreSQL để truy vấn phân trang tức thì."
       ],
-      flow: `
-[Độc giả (React + TS)]  <== RESTful API (JSON / JWT) ==>  [ASP.NET Core Web API]
+      flow: `[Độc giả (React + TS)]  <== RESTful API (JSON / JWT) ==>  [ASP.NET Core Web API]
                                                                   |
-                               +----------------------------------+----------------------------------+
-                               |                                                                     |
-                               v                                                                     v
-                     [Supabase PostgreSQL]                                                 [Google Gemini 1.5 API]
-                     (Indexes, RBAC Data)                                                  (TL;DR Synthesis & Tags)`,
+                                +----------------------------------+----------------------------------+
+                                |                                                                     |
+                                v                                                                     v
+                      [Supabase PostgreSQL]                                                 [Google Gemini 1.5 API]
+                      (Indexes, RBAC Data)                                                  (TL;DR Synthesis & Tags)`,
       repo: "https://github.com/phuctran1501/NewsHub"
     },
     en: {
@@ -36,8 +36,7 @@ const CASE_STUDIES = {
         "Enterprise Security: Stateless JWT tokens with Role-Based Access Control (RBAC).",
         "Optimized Persistence: Supabase PostgreSQL tuned with compound indices on publish dates and tags."
       ],
-      flow: `
-[Reader Client (React + TS)]  <== RESTful API (JSON / JWT) ==>  [ASP.NET Core Web API]
+      flow: `[Reader Client (React + TS)]  <== RESTful API (JSON / JWT) ==>  [ASP.NET Core Web API]
                                                                         |
                                      +----------------------------------+----------------------------------+
                                      |                                                                     |
@@ -58,8 +57,7 @@ const CASE_STUDIES = {
         "Đồng bộ sĩ số thực: Phân tích dữ liệu lớp học thời gian thực, cảnh báo nhóm đã đầy.",
         "Trực quan hóa dạng lưới: Hiển thị thời khóa biểu dạng bảng trực quan, hỗ trợ xuất lịch 1-click."
       ],
-      flow: `
-[Danh sách môn sinh viên chọn] ➔ [Crawl / Parse dữ liệu lớp học CTU]
+      flow: `[Danh sách môn sinh viên chọn] ➔ [Crawl / Parse dữ liệu lớp học CTU]
                                                 |
                                                 v
 [Thuật toán Constraint Satisfaction] ➔ Cắt tỉa các nhánh trùng giờ & kiểm tra sĩ số
@@ -77,8 +75,7 @@ const CASE_STUDIES = {
         "Real-Time Seat Verification: Scrapes and parses live course enrollment quotas to alert students of filled sections.",
         "Intuitive Grid Rendering: Color-coded weekly timetable layout with 1-click batch export."
       ],
-      flow: `
-[Student Course Selection] ➔ [Real-Time CTU Class Schedule Parser]
+      flow: `[Student Course Selection] ➔ [Real-Time CTU Class Schedule Parser]
                                                 |
                                                 v
 [Constraint Satisfaction Engine] ➔ Prunes time overlaps & verifies live seat limits
@@ -99,8 +96,7 @@ const CASE_STUDIES = {
         "Chấm điểm độ tương thích: Thuật toán tính toán trọng số tương quan giữa yêu cầu công việc và năng lực ứng viên.",
         "Cổng thông tin hai chiều: Module riêng biệt cho Nhà tuyển dụng và Ứng viên."
       ],
-      flow: `
-[Ứng viên nộp CV (PDF/Docx)] ➔ [NLP Parser & Trích xuất kỹ năng]
+      flow: `[Ứng viên nộp CV (PDF/Docx)] ➔ [NLP Parser & Trích xuất kỹ năng]
                                                 |
                                                 v
 [Bộ so khớp ATS Matcher]  <== Đối chiếu tiêu chí ==>  [Mô tả công việc (JD)]
@@ -118,8 +114,7 @@ const CASE_STUDIES = {
         "Deterministic Matching Metric: Computes multidimensional correlation weights between applicant capabilities and JD parameters.",
         "Dual-Portal Workflows: Specialized interfaces for both Talent Acquisition teams and Applicants."
       ],
-      flow: `
-[Candidate Submits CV (PDF)] ➔ [NLP Extraction Pipeline]
+      flow: `[Candidate Submits CV (PDF)] ➔ [NLP Extraction Pipeline]
                                                 |
                                                 v
 [ATS Scoring Engine]  <== Correlation Comparison ==>  [Job Description (JD)]
@@ -140,8 +135,7 @@ const CASE_STUDIES = {
         "Trạng thái P & N: Khi Nim-sum = 0 là P-position (người đi trước thua); khi Nim-sum ≠ 0 là N-position (người đi trước thắng).",
         "Giao diện TypeScript thuần khiết: Xây dựng bằng TypeScript với logic toán học chính xác 100%."
       ],
-      flow: `
-[Trạng thái đống sỏi hiện tại: {P1, P2, P3}]
+      flow: `[Trạng thái đống sỏi hiện tại: {P1, P2, P3}]
                     |
                     v
 [Tính toán XOR Nim-Sum: S = P1 ^ P2 ^ P3]
@@ -170,8 +164,7 @@ const CASE_STUDIES = {
         "P-Position & N-Position Classification: A zero Nim-sum guarantees a previous-player win (P-position); non-zero guarantees next-player win (N-position).",
         "Pure TypeScript Rigor: Implemented with strict typing, zero external dependencies for game logic, and responsive simulation."
       ],
-      flow: `
-[Current Pile Configuration: {P1, P2, P3}]
+      flow: `[Current Pile Configuration: {P1, P2, P3}]
                     |
                     v
 [Compute XOR Nim-Sum: S = P1 ^ P2 ^ P3]
@@ -194,42 +187,70 @@ const CASE_STUDIES = {
   }
 };
 
-// Global Language Manager (VI / EN)
+// ================= GLOBAL BILINGUAL MANAGER (VI / EN) =================
 window.currentLang = 'vi';
+
 window.setLanguage = function (lang) {
   window.currentLang = lang;
   localStorage.setItem('phuctran_portfolio_lang', lang);
 
-  const dict = window.I18N && window.I18N[lang] ? window.I18N[lang] : window.I18N.vi;
+  const dict = window.I18N && window.I18N[lang] ? window.I18N[lang] : (window.I18N ? window.I18N.vi : {});
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (dict[key]) {
       el.textContent = dict[key];
+      el.setAttribute('data-active-text', dict[key]);
+      if (el._scrambler) {
+        el._scrambler.isScrambling = false;
+        if (el._scrambler.frameRequest) cancelAnimationFrame(el._scrambler.frameRequest);
+      }
     }
   });
 
-  // Toggle active class on lang switcher buttons
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    if (dict[key]) {
+      el.setAttribute('title', dict[key]);
+    }
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) {
+      el.setAttribute('placeholder', dict[key]);
+    }
+  });
+
+  // Toggle active class on lang buttons
   document.querySelectorAll('.lang-btn').forEach(btn => {
     const btnLang = btn.getAttribute('data-lang');
     if (btnLang === lang) {
-      btn.className = 'lang-btn px-2.5 py-1 transition bg-[#1f5ca9] text-white font-bold border border-[#1f5ca9]';
+      btn.className = 'lang-btn px-2 py-0.5 rounded-full transition bg-[#1f5ca9] text-white font-bold';
     } else {
-      btn.className = 'lang-btn px-2.5 py-1 transition text-slate-500 border border-transparent hover:text-[#1f5ca9]';
+      btn.className = 'lang-btn px-2 py-0.5 rounded-full transition text-[var(--text-secondary)] hover:text-[#1f5ca9]';
     }
   });
+
+  // Update dynamic elements in Sandboxes & Command Palette
+  updateSandboxLanguage(lang);
+  renderCmdPaletteItems();
 
   if (window.hiFiDeck) {
     window.hiFiDeck.updateUI(window.hiFiDeck.isPlaying);
   }
-
-  if (window.spatialEngine && window.spatialEngine.updateToggleBtn) {
-    window.spatialEngine.updateToggleBtn();
-  }
 };
 
+function updateSandboxLanguage(lang) {
+  const dict = window.I18N[lang] || window.I18N.vi;
+  const nimLog = document.getElementById('nim-sandbox-log');
+  if (nimLog && nimLog.dataset.initialState !== 'false') {
+    nimLog.textContent = dict.sandbox_nim_log_init;
+  }
+}
+
 // ================= DARK / LIGHT THEME MANAGER =================
-window.currentTheme = 'dark'; // Default to elegant CTU Dark Mode (toned down)
+window.currentTheme = 'dark'; // Dark mode priority
 
 window.initTheme = function () {
   const saved = localStorage.getItem('phuctran_portfolio_theme') || 'dark';
@@ -241,57 +262,235 @@ window.setTheme = function (theme) {
   localStorage.setItem('phuctran_portfolio_theme', theme);
 
   const html = document.documentElement;
-  const toggleBtn = document.getElementById('theme-toggle-btn');
+  const icon = document.getElementById('theme-icon');
 
   if (theme === 'dark') {
     html.classList.add('dark');
-    if (toggleBtn) {
-      toggleBtn.innerHTML = '<span>⛅</span>';
-    }
+    if (icon) icon.textContent = '☀️';
   } else {
     html.classList.remove('dark');
-    if (toggleBtn) {
-      toggleBtn.innerHTML = '<span>🌙</span>';
-    }
+    if (icon) icon.textContent = '🌙';
   }
 };
 
 window.toggleTheme = function () {
   const next = window.currentTheme === 'dark' ? 'light' : 'dark';
   window.setTheme(next);
+  window.playUiClick(850);
 };
 
-// ================= 3D GYROSCOPIC TILT FOR HERO PORTRAIT STAGE =================
-function initHeroStage3D() {
-  const stage = document.querySelector('.hero-stage-container');
-  const card = document.querySelector('.hero-stage-card');
-  if (!stage || !card) return;
-
-  stage.addEventListener('mousemove', (e) => {
-    const rect = stage.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 12;
-
-    card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
-
-    const telemetryEl = document.getElementById('hero-telemetry-coords');
-    if (telemetryEl) {
-      telemetryEl.textContent = `ROT_X: ${rotateX.toFixed(1)}° • ROT_Y: ${rotateY.toFixed(1)}°`;
+// ================= SYNTHESIZED MICRO AUDIO FEEDBACK =================
+let audioCtx = null;
+window.playUiClick = function (pitch = 850, type = 'sine') {
+  try {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(pitch * 0.45, audioCtx.currentTime + 0.04);
+    gain.gain.setValueAtTime(0.035, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.045);
+  } catch (e) {}
+};
+
+// ================= LENIS SMOOTH MOMENTUM SCROLL =================
+function initLenisScroll() {
+  if (typeof Lenis !== 'undefined') {
+    window.lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.6,
+      infinite: false
+    });
+
+    function raf(time) {
+      window.lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
+}
+
+// ================= GSAP SCROLLTRIGGER REVEAL ANIMATIONS =================
+function initGsapAnimations() {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Staggered Hero Section entrance
+    gsap.from('#hero .space-y-6 > *', {
+      opacity: 0,
+      y: 24,
+      duration: 0.85,
+      stagger: 0.1,
+      ease: 'power3.out'
+    });
+
+    // Reveal Modern Cards on scroll
+    gsap.utils.toArray('.modern-card').forEach((card) => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 88%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 24,
+        duration: 0.7,
+        ease: 'power2.out'
+      });
+    });
+  }
+}
+
+// ================= TEXT SCRAMBLE / DECODER EFFECT (BUG-FREE & DIACRITIC SAFE) =================
+class TextScramble {
+  constructor(el) {
+    this.el = el;
+    this.chars = '!<>-_\\/[]{}—=+*^?#0101XYZ';
+    this.update = this.update.bind(this);
+    this.isScrambling = false;
+    this.frameRequest = null;
+  }
+
+  setText(newText) {
+    if (this.isScrambling) return Promise.resolve();
+    this.isScrambling = true;
+
+    const oldText = this.el.innerText || '';
+    const length = Math.max(oldText.length, newText.length);
+    const promise = new Promise((resolve) => this.resolve = resolve);
+    this.queue = [];
+
+    for (let i = 0; i < length; i++) {
+      const from = oldText[i] || '';
+      const to = newText[i] || '';
+      const start = Math.floor(Math.random() * 10);
+      const end = start + Math.floor(Math.random() * 12);
+      this.queue.push({ from, to, start, end });
+    }
+
+    if (this.frameRequest) cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    this.update();
+    return promise;
+  }
+
+  update() {
+    let output = '';
+    let complete = 0;
+
+    for (let i = 0, n = this.queue.length; i < n; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+      if (this.frame >= end) {
+        complete++;
+        output += to;
+      } else if (this.frame >= start) {
+        if (!char || Math.random() < 0.25) {
+          char = this.randomChar();
+          this.queue[i].char = char;
+        }
+        output += `<span class="text-[#1f5ca9] dark:text-sky-400 font-mono">${char}</span>`;
+      } else {
+        output += from;
+      }
+    }
+
+    this.el.innerHTML = output;
+
+    if (complete === this.queue.length) {
+      this.isScrambling = false;
+      this.resolve();
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update);
+      this.frame++;
+    }
+  }
+
+  randomChar() {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
+  }
+}
+
+function initTextScrambler() {
+  document.querySelectorAll('[data-scramble]').forEach((el) => {
+    const scrambler = new TextScramble(el);
+    el._scrambler = scrambler;
+    
+    // Initialize active text
+    el.setAttribute('data-active-text', el.innerText.trim());
+
+    el.addEventListener('mouseenter', () => {
+      // Always scramble to the current language's active text!
+      const targetText = el.getAttribute('data-active-text') || el.innerText.trim();
+      scrambler.setText(targetText);
+      window.playUiClick(1100);
+    });
   });
+}
 
-  stage.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    const telemetryEl = document.getElementById('hero-telemetry-coords');
-    if (telemetryEl) {
-      telemetryEl.textContent = 'CTU_SYSTEM • 3D_IDLE';
+// ================= 3D CARD PERSPECTIVE & SPECULAR HOLOGRAPHIC GLARE =================
+function init3DCardTilt() {
+  const cards = document.querySelectorAll('.modern-card');
+
+  cards.forEach(card => {
+    card.classList.add('tilt-card-3d');
+
+    // Add holographic sheen overlay if not present
+    if (!card.querySelector('.holographic-sheen')) {
+      const sheen = document.createElement('div');
+      sheen.className = 'holographic-sheen';
+      card.appendChild(sheen);
     }
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -5.5;
+      const rotateY = ((x - centerX) / centerX) * 7.5;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.015, 1.015, 1.015)`;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+
+// ================= MAGNETIC SPRING BUTTONS =================
+function initMagneticButtons() {
+  const buttons = document.querySelectorAll('.magnetic-btn, .btn-primary, .btn-secondary, #dock-audio-btn, #theme-toggle-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) * 0.22;
+      const y = (e.clientY - rect.top - rect.height / 2) * 0.22;
+      btn.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+    btn.addEventListener('click', () => {
+      window.playUiClick(850);
+    });
   });
 }
 
@@ -301,7 +500,9 @@ window.openDossierModal = function () {
   if (!modal) return;
   modal.classList.remove('hidden');
   modal.classList.add('flex');
+  window.lenis?.stop();
   document.body.style.overflow = 'hidden';
+  window.playUiClick(750);
 };
 
 window.closeDossierModal = function () {
@@ -309,8 +510,131 @@ window.closeDossierModal = function () {
   if (!modal) return;
   modal.classList.add('hidden');
   modal.classList.remove('flex');
+  window.lenis?.start();
   document.body.style.overflow = '';
+  window.playUiClick(600);
 };
+
+// ================= RAYCAST / LINEAR COMMAND PALETTE (CTRL+K) =================
+const COMMAND_ACTIONS = [
+  { id: 'nav-about', group: 'cmd_group_navigation', label: 'cmd_nav_about', icon: '👤', action: () => scrollToSection('about') },
+  { id: 'nav-labs', group: 'cmd_group_navigation', label: 'cmd_nav_labs', icon: '🧪', action: () => scrollToSection('interactive-lab') },
+  { id: 'nav-projects', group: 'cmd_group_navigation', label: 'cmd_nav_projects', icon: '🚀', action: () => scrollToSection('projects') },
+  { id: 'nav-topology', group: 'cmd_group_navigation', label: 'cmd_nav_topology', icon: '📐', action: () => scrollToSection('topology') },
+  { id: 'nav-lounge', group: 'cmd_group_navigation', label: 'cmd_nav_lounge', icon: '🎵', action: () => scrollToSection('audio-lounge') },
+  { id: 'nav-contact', group: 'cmd_group_navigation', label: 'cmd_nav_contact', icon: '✉️', action: () => scrollToSection('contact') },
+  { id: 'act-theme', group: 'cmd_group_actions', label: 'cmd_act_theme', icon: '🌗', action: () => window.toggleTheme() },
+  { id: 'act-lang', group: 'cmd_group_actions', label: 'cmd_act_lang', icon: '🌐', action: () => window.setLanguage(window.currentLang === 'vi' ? 'en' : 'vi') },
+  { id: 'act-audio', group: 'cmd_group_actions', label: 'cmd_act_audio', icon: '🔊', action: () => window.hiFiDeck?.toggle() },
+  { id: 'act-dossier', group: 'cmd_group_actions', label: 'cmd_act_dossier', icon: '📄', action: () => window.openDossierModal() },
+  { id: 'act-email', group: 'cmd_group_actions', label: 'cmd_act_email', icon: '📋', action: () => window.copyEmail() }
+];
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    window.closeCmdPalette();
+    if (window.lenis) {
+      window.lenis.scrollTo(el, { offset: -70 });
+    } else {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}
+
+window.openCmdPalette = function () {
+  const modal = document.getElementById('cmd-palette-modal');
+  const input = document.getElementById('cmd-search-input');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+  window.lenis?.stop();
+  document.body.style.overflow = 'hidden';
+  if (input) {
+    input.value = '';
+    renderCmdPaletteItems('');
+    setTimeout(() => input.focus(), 60);
+  }
+  window.playUiClick(950);
+};
+
+window.closeCmdPalette = function () {
+  const modal = document.getElementById('cmd-palette-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+  window.lenis?.start();
+  document.body.style.overflow = '';
+  window.playUiClick(650);
+};
+
+function renderCmdPaletteItems(query = '') {
+  const list = document.getElementById('cmd-items-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  const lang = window.currentLang || 'vi';
+  const dict = window.I18N[lang] || window.I18N.vi;
+  const q = query.toLowerCase().trim();
+
+  const filtered = COMMAND_ACTIONS.filter(item => {
+    const text = (dict[item.label] || '').toLowerCase();
+    return text.includes(q);
+  });
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div class="p-4 text-center text-xs text-[var(--text-tertiary)] font-mono">${lang === 'vi' ? 'Không tìm thấy kết quả phù hợp' : 'No matching commands found'}</div>`;
+    return;
+  }
+
+  filtered.forEach((item, idx) => {
+    const el = document.createElement('div');
+    el.className = `cmd-palette-item ${idx === 0 ? 'is-selected' : ''}`;
+    el.innerHTML = `
+      <div class="flex items-center gap-2.5">
+        <span class="text-sm">${item.icon}</span>
+        <span class="font-medium">${dict[item.label] || item.label}</span>
+      </div>
+      <span class="cmd-kbd">↵</span>
+    `;
+    el.addEventListener('click', () => {
+      window.playUiClick(1000);
+      item.action();
+      window.closeCmdPalette();
+    });
+    list.appendChild(el);
+  });
+}
+
+function initCmdPalette() {
+  const input = document.getElementById('cmd-search-input');
+  if (input) {
+    input.addEventListener('input', (e) => {
+      renderCmdPaletteItems(e.target.value);
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.closeCmdPalette();
+      } else if (e.key === 'Enter') {
+        const first = document.querySelector('.cmd-palette-item.is-selected') || document.querySelector('.cmd-palette-item');
+        if (first) first.click();
+      }
+    });
+  }
+
+  // Global Ctrl+K / Cmd+K listener
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      const modal = document.getElementById('cmd-palette-modal');
+      if (modal && !modal.classList.contains('hidden')) {
+        window.closeCmdPalette();
+      } else {
+        window.openCmdPalette();
+      }
+    }
+  });
+}
 
 // ================= INTERACTIVE SANDBOX LAB TABS (4 LABS) =================
 window.switchSandboxTab = function (tabName) {
@@ -318,18 +642,10 @@ window.switchSandboxTab = function (tabName) {
   tabs.forEach(t => {
     const btn = document.getElementById(`sandbox-tab-${t}`);
     const panel = document.getElementById(`sandbox-panel-${t}`);
-    if (t === tabName) {
-      if (btn) {
-        btn.className = 'sandbox-tab-btn px-4 py-2 bg-[#1f5ca9] text-white border border-[#1f5ca9] font-bold transition';
-      }
-      if (panel) panel.classList.remove('hidden');
-    } else {
-      if (btn) {
-        btn.className = 'sandbox-tab-btn px-4 py-2 bg-transparent text-[var(--text-muted)] border border-[var(--border-line)] hover:text-[#1f5ca9] hover:bg-blue-50/10 transition';
-      }
-      if (panel) panel.classList.add('hidden');
-    }
+    if (btn) btn.classList.toggle('active', t === tabName);
+    if (panel) panel.classList.toggle('hidden', t !== tabName);
   });
+  window.playUiClick(950);
 };
 
 // ================= LAB 1: CTU SOLVER SIMULATION =================
@@ -342,8 +658,18 @@ window.runCtuSolverSimulation = function () {
   btn.disabled = true;
   resultGrid.classList.add('hidden');
   terminal.innerHTML = '';
+  window.playUiClick(1050);
 
-  const steps = [
+  const isEn = (window.currentLang || 'vi') === 'en';
+
+  const steps = isEn ? [
+    { text: '[INIT] Ingesting 4 registered course modules: [CT201, CT202, CT203, CT204]...', delay: 180 },
+    { text: '[CSP-CORE] State space initialized: 48 timetable permutations...', delay: 500 },
+    { text: '[PRUNING] Conflict detected: CT201 group 01 collides on Mon with CT202 group 03 ➔ PRUNED.', delay: 900 },
+    { text: '[QUOTA-CHECK] Verifying real-time class capacity: CT203 has 8/45 open seats ➔ APPROVED.', delay: 1350 },
+    { text: '[OPTIMIZE] Objective function computed: Weekly dispersion spread = 94.2% (Optimal).', delay: 1750 },
+    { text: '[COMPLETE] Optimal conflict-free schedule synthesized in 11.8ms.', delay: 2150 }
+  ] : [
     { text: '[INIT] Nạp danh mục 4 học phần đăng ký: [CT201, CT202, CT203, CT204]...', delay: 180 },
     { text: '[CSP-CORE] Khởi tạo không gian trạng thái: 48 hoán vị thời khóa biểu...', delay: 500 },
     { text: '[PRUNING] Phát hiện xung đột: CT201 nhóm 01 trùng giờ Thứ 2 với CT202 nhóm 03 ➔ CẮT TỈA (Pruned).', delay: 900 },
@@ -355,7 +681,7 @@ window.runCtuSolverSimulation = function () {
   steps.forEach((s) => {
     setTimeout(() => {
       const line = document.createElement('div');
-      line.className = 'text-[#38bdf8] font-mono text-xs';
+      line.className = 'text-sky-400 font-mono text-xs';
       line.textContent = s.text;
       terminal.appendChild(line);
       terminal.scrollTop = terminal.scrollHeight;
@@ -365,6 +691,7 @@ window.runCtuSolverSimulation = function () {
   setTimeout(() => {
     btn.disabled = false;
     resultGrid.classList.remove('hidden');
+    window.playUiClick(1200);
   }, 2350);
 };
 
@@ -379,10 +706,18 @@ window.runSmartHireSimulation = function () {
   btn.disabled = true;
   result.classList.add('hidden');
   terminal.innerHTML = '';
+  window.playUiClick(1050);
 
+  const isEn = (window.currentLang || 'vi') === 'en';
   const isPhuc = !candidateSelect || candidateSelect.value === 'phuc';
 
-  const steps = [
+  const steps = isEn ? [
+    { text: `[INSPECT] Parsing candidate dossier: ${isPhuc ? 'PHUC TRAN (Backend Specialist • C# Clean Architecture)' : 'Fresher Candidate B'}...`, delay: 180 },
+    { text: '[TOKENIZE] NLP tokenizer extracted 32 technical competencies and 4 undergraduate course modules...', delay: 550 },
+    { text: '[VECTOR-COSINE] Computing multidimensional semantic correlation against target Job Description (JD)...', delay: 1000 },
+    { text: `[ATS-GRADE] Total ATS Compliance Score: ${isPhuc ? '96.4%' : '64.2%'} • Critical criteria: ${isPhuc ? '100% MATCHED' : 'DEFICIT IN BACKEND SYSTEMS'}.`, delay: 1450 },
+    { text: '[STATUS] Recruiter assessment report generated and persisted.', delay: 1850 }
+  ] : [
     { text: `[INSPECT] Tải hồ sơ ứng viên: ${isPhuc ? 'PHÚC TRẦN (Senior Backend • C# Clean Architecture)' : 'Fresher Candidate B'}...`, delay: 180 },
     { text: '[TOKENIZE] Bộ trích xuất NLP bóc tách 32 từ khóa kỹ năng & 4 năm học phần chuyên sâu...', delay: 550 },
     { text: '[VECTOR-COSINE] Tính toán độ tương quan ngữ nghĩa đa chiều với mô tả công việc (JD)...', delay: 1000 },
@@ -393,7 +728,7 @@ window.runSmartHireSimulation = function () {
   steps.forEach((s) => {
     setTimeout(() => {
       const line = document.createElement('div');
-      line.className = 'text-[#38bdf8] font-mono text-xs';
+      line.className = 'text-sky-400 font-mono text-xs';
       line.textContent = s.text;
       terminal.appendChild(line);
       terminal.scrollTop = terminal.scrollHeight;
@@ -407,6 +742,7 @@ window.runSmartHireSimulation = function () {
     const scoreBar = document.getElementById('smarthire-score-bar');
     if (scoreVal) scoreVal.textContent = isPhuc ? '96.4%' : '64.2%';
     if (scoreBar) scoreBar.style.width = isPhuc ? '96.4%' : '64.2%';
+    window.playUiClick(1200);
   }, 2050);
 };
 
@@ -418,36 +754,47 @@ window.resetNimGame = function () {
   nimPiles = [3, 4, 5];
   isPlayerTurn = true;
   updateNimUI();
+  const isEn = (window.currentLang || 'vi') === 'en';
+  const dict = window.I18N[isEn ? 'en' : 'vi'] || window.I18N.vi;
   const logEl = document.getElementById('nim-sandbox-log');
-  if (logEl) {
-    logEl.textContent = 'Trạng thái khởi tạo: Nim-sum = 3 ^ 4 ^ 5 = 2. Nhấp nút -1, -2, -3 để đi nước cờ của bạn!';
-  }
+  const turnEl = document.getElementById('nim-sandbox-turn');
+  if (logEl) logEl.textContent = dict.sandbox_nim_log_init;
+  if (turnEl) turnEl.textContent = dict.sandbox_nim_turn_player;
+  window.playUiClick(900);
 };
 
 window.nimTakeStone = function (pileIdx, count) {
   if (!isPlayerTurn) return;
+  const isEn = (window.currentLang || 'vi') === 'en';
+  const dict = window.I18N[isEn ? 'en' : 'vi'] || window.I18N.vi;
+
   if (nimPiles[pileIdx] < count) {
-    alert('Đống này không đủ số lượng sỏi để bốc!');
+    alert(dict.sandbox_nim_not_enough);
     return;
   }
 
   nimPiles[pileIdx] -= count;
   updateNimUI();
+  window.playUiClick(800);
 
   if (checkNimGameOver()) {
-    document.getElementById('nim-sandbox-turn').textContent = '🎉 BẠN ĐÃ THẮNG! (BẠN ĐÃ BỐC VIÊN SỎI CUỐI CÙNG)';
+    document.getElementById('nim-sandbox-turn').textContent = dict.sandbox_nim_win_player;
+    window.playUiClick(1300);
     return;
   }
 
   isPlayerTurn = false;
-  document.getElementById('nim-sandbox-turn').textContent = 'AI đang tính toán tổng Nim-sum...';
+  document.getElementById('nim-sandbox-turn').textContent = dict.sandbox_nim_turn_ai;
 
   setTimeout(() => {
     executeAiNimMove();
-  }, 800);
+  }, 700);
 };
 
 function executeAiNimMove() {
+  const isEn = (window.currentLang || 'vi') === 'en';
+  const dict = window.I18N[isEn ? 'en' : 'vi'] || window.I18N.vi;
+
   const nimSum = nimPiles[0] ^ nimPiles[1] ^ nimPiles[2];
   let targetPile = -1;
   let takeCount = 1;
@@ -478,16 +825,18 @@ function executeAiNimMove() {
 
   const logEl = document.getElementById('nim-sandbox-log');
   if (logEl) {
-    logEl.textContent = `AI đã bốc ${takeCount} viên từ Đống ${targetPile + 1}. Nim-sum hiện tại: ${nimPiles[0] ^ nimPiles[1] ^ nimPiles[2]}.`;
+    logEl.textContent = isEn
+      ? `AI took ${takeCount} stone(s) from Pile ${targetPile + 1}. Current Nim-sum: ${nimPiles[0] ^ nimPiles[1] ^ nimPiles[2]}.`
+      : `AI đã bốc ${takeCount} viên từ Đống ${targetPile + 1}. Nim-sum hiện tại: ${nimPiles[0] ^ nimPiles[1] ^ nimPiles[2]}.`;
   }
 
   if (checkNimGameOver()) {
-    document.getElementById('nim-sandbox-turn').textContent = '🤖 AI ĐÃ THẮNG! (Định lý Bouton chứng minh AI luôn thắng nếu bắt đầu từ N-position)';
+    document.getElementById('nim-sandbox-turn').textContent = dict.sandbox_nim_win_ai;
     return;
   }
 
   isPlayerTurn = true;
-  document.getElementById('nim-sandbox-turn').textContent = 'Lượt của bạn (Người chơi)';
+  document.getElementById('nim-sandbox-turn').textContent = dict.sandbox_nim_turn_player;
 }
 
 function updateNimUI() {
@@ -511,8 +860,17 @@ window.runNewsHubAiSimulation = function () {
   btn.disabled = true;
   result.classList.add('hidden');
   terminal.innerHTML = '';
+  window.playUiClick(1050);
 
-  const steps = [
+  const isEn = (window.currentLang || 'vi') === 'en';
+
+  const steps = isEn ? [
+    { text: '[PIPELINE] Ingesting article: "ASP.NET Core 9 Clean Architecture & PostgreSQL"...', delay: 180 },
+    { text: '[TOKENIZER] Segmented document into 1,420 tokens (Byte-Pair Encoding)...', delay: 550 },
+    { text: '[STREAM] Dispatched payload to Google Gemini 1.5 Pro API endpoint...', delay: 1000 },
+    { text: '[LLM-RESPONSE] Streaming completed (280ms latency, 142 tokens synthesized)...', delay: 1450 },
+    { text: '[SUCCESS] 10-second TL;DR synthesis and entity extraction finished.', delay: 1850 }
+  ] : [
     { text: '[PIPELINE] Trích xuất bài viết: "Kiến trúc ASP.NET Core 9 Clean Architecture & PostgreSQL"...', delay: 180 },
     { text: '[TOKENIZER] Chia nhỏ văn bản thành 1,420 token (Byte-Pair Encoding)...', delay: 550 },
     { text: '[STREAM] Gửi payload tới Gemini 1.5 Pro API endpoint...', delay: 1000 },
@@ -523,7 +881,7 @@ window.runNewsHubAiSimulation = function () {
   steps.forEach((s) => {
     setTimeout(() => {
       const line = document.createElement('div');
-      line.className = 'text-[#38bdf8] font-mono text-xs';
+      line.className = 'text-sky-400 font-mono text-xs';
       line.textContent = s.text;
       terminal.appendChild(line);
       terminal.scrollTop = terminal.scrollHeight;
@@ -533,10 +891,11 @@ window.runNewsHubAiSimulation = function () {
   setTimeout(() => {
     btn.disabled = false;
     result.classList.remove('hidden');
+    window.playUiClick(1200);
   }, 2050);
 };
 
-// ================= CASE STUDY BREAKDOWN MODAL =================
+// ================= CASE STUDY BREAKDOWN MODAL (PERFECT WHEEL SCROLLING) =================
 window.openCaseStudy = function (key) {
   const study = CASE_STUDIES[key];
   if (!study) return;
@@ -548,45 +907,47 @@ window.openCaseStudy = function (key) {
   const content = document.getElementById('case-study-content');
   if (!modal || !content) return;
 
+  window.playUiClick(750);
+
   content.innerHTML = `
-    <div class="flex items-start justify-between border-b border-[var(--border-line)] pb-5 mb-5">
+    <div class="flex items-start justify-between border-b border-[var(--border-subtle)] pb-4 mb-5">
       <div>
-        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 text-xs font-mono bg-blue-900/20 text-[#1f5ca9] border border-blue-500/30 mb-2 font-bold">
-          <span>CTU ARCHITECTURAL BLUEPRINT • V2.0</span>
+        <div class="badge-pill mb-2">
+          <span>CTU ARCHITECTURAL BLUEPRINT</span>
         </div>
-        <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-main)]">${langData.title}</h3>
-        <p class="text-xs sm:text-sm text-[#1f5ca9] font-mono mt-1 font-semibold">${langData.tagline}</p>
+        <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text-primary)]">${langData.title}</h3>
+        <p class="text-xs sm:text-sm text-[#1f5ca9] dark:text-sky-400 font-mono mt-1 font-semibold">${langData.tagline}</p>
       </div>
-      <button onclick="window.closeCaseStudy()" class="px-3 py-1.5 text-[var(--text-dim)] hover:text-[#1f5ca9] border border-[var(--border-line)] hover:border-[#1f5ca9] transition font-mono text-xs font-semibold">
-        [ESC • CLOSE]
+      <button onclick="window.closeCaseStudy()" class="btn-secondary text-xs py-1 px-3 magnetic-btn">
+        [ESC]
       </button>
     </div>
 
     <div class="space-y-6 text-xs sm:text-sm">
       <div>
-        <div class="text-xs font-mono uppercase tracking-wider text-[#1f5ca9] font-bold mb-1.5">• 01. TỔNG QUAN</div>
-        <p class="text-[var(--text-muted)] leading-relaxed font-sans">${langData.overview}</p>
+        <div class="text-xs font-mono uppercase tracking-wider text-[#1f5ca9] dark:text-sky-400 font-bold mb-1.5">• 01. ${lang === 'vi' ? 'TỔNG QUAN' : 'OVERVIEW'}</div>
+        <p class="text-[var(--text-secondary)] leading-relaxed font-sans">${langData.overview}</p>
       </div>
 
       <div>
-        <div class="text-xs font-mono uppercase tracking-wider text-[#1f5ca9] font-bold mb-1.5">• 02. NGUYÊN LÝ THIẾT KẾ</div>
-        <ul class="space-y-2 text-[var(--text-muted)]">
-          ${langData.highlights.map(h => `<li class="flex items-start gap-2"><span class="text-[#1f5ca9] font-bold">▪</span><div>${h}</div></li>`).join('')}
+        <div class="text-xs font-mono uppercase tracking-wider text-[#1f5ca9] dark:text-sky-400 font-bold mb-1.5">• 02. ${lang === 'vi' ? 'NGUYÊN LÝ THIẾT KẾ' : 'DESIGN PRINCIPLES'}</div>
+        <ul class="space-y-2 text-[var(--text-secondary)]">
+          ${langData.highlights.map(h => `<li class="flex items-start gap-2"><span class="text-[#1f5ca9] dark:text-sky-400 font-bold">▪</span><div>${h}</div></li>`).join('')}
         </ul>
       </div>
 
       <div>
-        <div class="text-xs font-mono uppercase tracking-wider text-[#1f5ca9] font-bold mb-1.5">• 03. SƠ ĐỒ LUỒNG DỮ LIỆU</div>
-        <div class="bg-slate-950 text-sky-300 p-4 border border-slate-800 font-mono text-[11px] overflow-x-auto whitespace-pre">
+        <div class="text-xs font-mono uppercase tracking-wider text-[#1f5ca9] dark:text-sky-400 font-bold mb-1.5">• 03. ${lang === 'vi' ? 'SƠ ĐỒ LUỒNG DỮ LIỆU' : 'DATA FLOW TOPOLOGY'}</div>
+        <div class="bg-black/90 text-sky-300 p-4 rounded-xl border border-white/10 font-mono text-[11px] overflow-x-auto whitespace-pre leading-relaxed">
 ${langData.flow}
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[var(--border-line)]">
-        <a href="${langData.repo}" target="_blank" class="chamfer-btn magnetic-btn px-4 py-2 bg-[#1f5ca9] hover:bg-[#0f3d75] text-white font-bold text-xs font-mono transition">
+      <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[var(--border-subtle)]">
+        <a href="${langData.repo}" target="_blank" class="btn-primary text-xs magnetic-btn">
           ${lang === 'vi' ? 'XEM MÃ NGUỒN GITHUB ↗' : 'VIEW SOURCE ON GITHUB ↗'}
         </a>
-        <button onclick="window.closeCaseStudy()" class="chamfer-btn magnetic-btn px-4 py-2 bg-[var(--bg-surface)] hover:bg-[var(--bg-card)] text-[var(--text-main)] hover:text-[#1f5ca9] text-xs font-mono border border-[var(--border-line)] transition font-semibold">
+        <button onclick="window.closeCaseStudy()" class="btn-secondary text-xs magnetic-btn">
           ${lang === 'vi' ? 'ĐÓNG CỬA SỔ' : 'CLOSE WINDOW'}
         </button>
       </div>
@@ -595,8 +956,13 @@ ${langData.flow}
 
   modal.classList.remove('hidden');
   modal.classList.add('flex');
+  window.lenis?.stop();
   document.body.style.overflow = 'hidden';
-  if (window.initMagneticHover) window.initMagneticHover();
+
+  // Prevent wheel bubbling to window
+  content.addEventListener('wheel', (e) => {
+    e.stopPropagation();
+  }, { passive: true });
 };
 
 window.closeCaseStudy = function () {
@@ -604,7 +970,9 @@ window.closeCaseStudy = function () {
   if (modal) {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
+    window.lenis?.start();
     document.body.style.overflow = '';
+    window.playUiClick(600);
   }
 };
 
@@ -630,223 +998,16 @@ window.copyEmail = function () {
   navigator.clipboard.writeText(email).then(() => {
     const isVi = (window.currentLang || 'vi') === 'vi';
     window.showToast(isVi ? 'ĐÃ SAO CHÉP EMAIL VÀO BỘ NHỚ TẠM!' : 'EMAIL COPIED TO CLIPBOARD!');
+    window.playUiClick(1200);
   });
 };
-
-// ================= MAGNETIC HOVER EFFECT =================
-window.initMagneticHover = function () {
-  const magneticEls = document.querySelectorAll('.magnetic-btn, .chamfer-btn');
-  
-  magneticEls.forEach(el => {
-    if (el.dataset.magneticBound) return;
-    el.dataset.magneticBound = 'true';
-
-    el.addEventListener('mousemove', (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      
-      const pull = 0.25;
-      el.style.transform = `translate(${x * pull}px, ${y * pull}px)`;
-    });
-
-    el.addEventListener('mouseleave', () => {
-      el.style.transform = '';
-    });
-  });
-};
-
-// ================= SPOTLIGHT BORDER GLOW =================
-window.initSpotlightBorders = function () {
-  const cards = document.querySelectorAll('.spotlight-card, .arch-card');
-
-  cards.forEach(card => {
-    if (card.dataset.spotlightBound) return;
-    card.dataset.spotlightBound = 'true';
-
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    });
-  });
-};
-
-// ================= HUD MINIMIZATION CONTROLLERS =================
-window.toggleRadarMinimize = function () {
-  const radar = document.getElementById('spatial-radar-hud');
-  const minBtn = document.getElementById('radar-min-btn');
-  if (!radar) return;
-
-  const isMin = radar.classList.toggle('is-minimized');
-  if (minBtn) {
-    minBtn.textContent = isMin ? '[+]' : '_';
-    minBtn.title = isMin ? 'Mở rộng Radar' : 'Thu nhỏ Radar';
-  }
-  localStorage.setItem('phuctran_radar_minimized', isMin ? 'true' : 'false');
-};
-
-window.toggleWalkmanMinimize = function () {
-  const dock = document.getElementById('floating-audio-dock');
-  const minBtn = document.getElementById('walkman-min-btn');
-  if (!dock) return;
-
-  const isMin = dock.classList.toggle('is-minimized');
-  if (minBtn) {
-    minBtn.textContent = isMin ? '[+]' : '_';
-    minBtn.title = isMin ? 'Mở rộng Walkman' : 'Thu nhỏ Walkman';
-  }
-  localStorage.setItem('phuctran_walkman_minimized', isMin ? 'true' : 'false');
-};
-
-window.initHUDMinState = function () {
-  if (localStorage.getItem('phuctran_radar_minimized') === 'true') {
-    const radar = document.getElementById('spatial-radar-hud');
-    const minBtn = document.getElementById('radar-min-btn');
-    if (radar) radar.classList.add('is-minimized');
-    if (minBtn) {
-      minBtn.textContent = '[+]';
-      minBtn.title = 'Mở rộng Radar';
-    }
-  }
-
-  if (localStorage.getItem('phuctran_walkman_minimized') === 'true') {
-    const dock = document.getElementById('floating-audio-dock');
-    const minBtn = document.getElementById('walkman-min-btn');
-    if (dock) dock.classList.add('is-minimized');
-    if (minBtn) {
-      minBtn.textContent = '[+]';
-      minBtn.title = 'Mở rộng Walkman';
-    }
-  }
-};
-
-// ================= CYBER DATA COORDINATES CURSOR TRAIL =================
-class CyberCursorTrail {
-  constructor() {
-    this.hud = document.getElementById('cyber-cursor-hud');
-    this.reticle = document.getElementById('cursor-reticle');
-    this.dataTag = document.getElementById('cursor-data-tag');
-    this.coordsVal = document.getElementById('cursor-coords-val');
-    this.modeBadge = document.getElementById('cursor-mode-badge');
-    this.ripplesContainer = document.getElementById('cursor-click-ripples');
-
-    if (!this.hud || !this.reticle || !this.dataTag) return;
-
-    this.mouseX = window.innerWidth / 2;
-    this.mouseY = window.innerHeight / 2;
-    this.reticleX = this.mouseX;
-    this.reticleY = this.mouseY;
-    this.tagX = this.mouseX;
-    this.tagY = this.mouseY;
-    this.isVisible = false;
-    this.isLocked = false;
-
-    this.init();
-  }
-
-  init() {
-    if (window.matchMedia('(pointer: coarse)').matches) return;
-
-    window.addEventListener('mousemove', (e) => this.onMouseMove(e), { passive: true });
-    window.addEventListener('mousedown', (e) => this.onMouseDown(e), { passive: true });
-    document.addEventListener('mouseleave', () => this.onMouseLeave());
-    document.addEventListener('mouseenter', () => this.onMouseEnter());
-
-    document.addEventListener('mouseover', (e) => {
-      const target = e.target.closest('a, button, input, select, textarea, .chamfer-btn, .magnetic-btn, .radar-node-pin, .interactive-card');
-      this.setLocked(!!target);
-    }, { passive: true });
-
-    this.render();
-  }
-
-  onMouseMove(e) {
-    this.mouseX = e.clientX;
-    this.mouseY = e.clientY;
-    if (!this.isVisible) {
-      this.isVisible = true;
-      this.hud.style.opacity = '1';
-    }
-  }
-
-  onMouseEnter() {
-    this.isVisible = true;
-    this.hud.style.opacity = '1';
-  }
-
-  onMouseLeave() {
-    this.isVisible = false;
-    this.hud.style.opacity = '0';
-  }
-
-  onMouseDown(e) {
-    if (!this.ripplesContainer) return;
-    const ripple = document.createElement('div');
-    ripple.className = 'cyber-click-ripple';
-    ripple.style.left = `${e.clientX}px`;
-    ripple.style.top = `${e.clientY}px`;
-    this.ripplesContainer.appendChild(ripple);
-    setTimeout(() => {
-      ripple.remove();
-    }, 460);
-  }
-
-  setLocked(isLocked) {
-    this.isLocked = isLocked;
-    this.hud.classList.toggle('is-locked', isLocked);
-    if (this.modeBadge) {
-      if (isLocked) {
-        this.modeBadge.textContent = 'LOCK';
-      } else {
-        const mode = window.uiEngine ? window.uiEngine.currentMode : 'spatial';
-        this.modeBadge.textContent = mode.toUpperCase();
-      }
-    }
-  }
-
-  render() {
-    this.reticleX += (this.mouseX - this.reticleX) * 0.45;
-    this.reticleY += (this.mouseY - this.reticleY) * 0.45;
-    this.tagX += (this.mouseX - this.tagX) * 0.18;
-    this.tagY += (this.mouseY - this.tagY) * 0.18;
-
-    this.reticle.style.transform = `translate3d(${this.reticleX.toFixed(1)}px, ${this.reticleY.toFixed(1)}px, 0) translate(-50%, -50%)`;
-    this.dataTag.style.transform = `translate3d(${this.tagX.toFixed(1)}px, ${this.tagY.toFixed(1)}px, 0) translate(14px, 14px)`;
-
-    if (this.coordsVal) {
-      let xVal = Math.round(this.mouseX);
-      let yVal = Math.round(this.mouseY);
-      let prefix = 'X';
-
-      if (window.uiEngine) {
-        if (window.uiEngine.currentMode === 'spatial' && window.uiEngine.camera) {
-          const cam = window.uiEngine.camera;
-          xVal = Math.round((this.mouseX - cam.x) / cam.scale);
-          yVal = Math.round((this.mouseY - cam.y) / cam.scale);
-        } else if (window.uiEngine.currentMode === 'linear') {
-          yVal = Math.round(this.mouseY + window.scrollY);
-        } else if (window.uiEngine.currentMode === 'conveyor' && window.uiEngine.viewport) {
-          xVal = Math.round(this.mouseX + window.uiEngine.viewport.scrollLeft);
-          prefix = 'TRK';
-        }
-      }
-
-      this.coordsVal.textContent = `${prefix}: ${xVal} • Y: ${yVal}`;
-    }
-
-    requestAnimationFrame(() => this.render());
-  }
-}
 
 // Global Keyboard Handler (ESC to close modals)
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     window.closeCaseStudy();
     window.closeDossierModal();
+    window.closeCmdPalette();
   }
 });
 
@@ -857,22 +1018,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('phuctran_portfolio_lang') || 'vi';
   window.setLanguage(savedLang);
 
-  initHeroStage3D();
-  window.initMagneticHover();
-  window.initSpotlightBorders();
-  window.initHUDMinState();
-  window.cyberCursor = new CyberCursorTrail();
-
-  const mobileBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  if (mobileBtn && mobileMenu) {
-    mobileBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-    });
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-    });
-  }
+  initLenisScroll();
+  initGsapAnimations();
+  initTextScrambler();
+  init3DCardTilt();
+  initMagneticButtons();
+  initCmdPalette();
 
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
@@ -882,7 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById('form-email')?.value || '';
       const msg = document.getElementById('form-msg')?.value || '';
 
-      const subject = encodeURIComponent(`[Portfolio Transmission] From ${name}`);
+      const subject = encodeURIComponent(`[Portfolio Contact] From ${name}`);
       const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`);
 
       window.location.href = `mailto:phuctran1501@gmail.com?subject=${subject}&body=${body}`;

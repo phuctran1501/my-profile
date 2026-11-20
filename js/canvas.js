@@ -1,177 +1,228 @@
 /**
- * Can Tho University (CTU) Architectural Wave Grid Canvas
- * Palette: Official CTU Blue (#1f5ca9), Sky Blue (#60a5fa), Crisp White Grid
- * Zero AI Slop • 60fps Dynamic Geometry Physics
+ * Kinetic Luminescent Aurora & Ambient Energy Field Canvas
+ * Inspired by Apple, Vercel, Linear & Impeccable Design
+ * Perfectly synchronized between Dark Mode (Obsidian Blue) & Light Mode (Azure Pearl)
+ * 60 FPS lightweight physics, interactive cursor repulsion & fluid energy blending
  */
 
-class PolyhedralFieldCanvas {
-  constructor(canvasId) {
-    this.canvas = document.getElementById(canvasId);
-    if (!this.canvas) return;
-    this.ctx = this.canvas.getContext('2d');
-    this.mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
-    this.nodes = [];
-    this.time = 0;
+(function () {
+  const canvas = document.getElementById('geometric-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
 
-    this.init();
-  }
+  let width = 0;
+  let height = 0;
+  let dpr = 1;
+  let animId = null;
 
-  init() {
-    this.resize();
-    window.addEventListener('resize', () => this.resize());
+  // Mouse & Physics Tracking
+  const mouse = {
+    x: -9999,
+    y: -9999,
+    targetX: -9999,
+    targetY: -9999,
+    vx: 0,
+    vy: 0,
+    radius: 240,
+    isHovered: false
+  };
 
-    window.addEventListener('mousemove', (e) => {
-      this.mouse.targetX = e.clientX;
-      this.mouse.targetY = e.clientY;
-      if (this.mouse.x === -1000) {
-        this.mouse.x = e.clientX;
-        this.mouse.y = e.clientY;
-      }
-    });
+  // Color Palettes
+  const THEME_PALETTES = {
+    dark: {
+      aurora1: { r: 31, g: 92, b: 169, alpha: 0.28 },   // Signature CTU Blue
+      aurora2: { r: 56, g: 189, b: 248, alpha: 0.22 },  // Electric Cyan
+      aurora3: { r: 15, g: 61, b: 117, alpha: 0.32 },   // Deep Navy Accent
+      aurora4: { r: 99, g: 102, b: 241, alpha: 0.16 },  // Subtle Indigo
+      particleColor: 'rgba(56, 189, 248, 0.45)',
+      lineColor: 'rgba(56, 189, 248, 0.08)'
+    },
+    light: {
+      aurora1: { r: 31, g: 92, b: 169, alpha: 0.10 },   // Soft Blue
+      aurora2: { r: 56, g: 189, b: 248, alpha: 0.12 },  // Soft Sky
+      aurora3: { r: 203, g: 213, b: 225, alpha: 0.25 }, // Frost Slate
+      aurora4: { r: 147, g: 197, b: 253, alpha: 0.10 }, // Baby Azure
+      particleColor: 'rgba(31, 92, 169, 0.28)',
+      lineColor: 'rgba(31, 92, 169, 0.06)'
+    }
+  };
 
-    window.addEventListener('mouseleave', () => {
-      this.mouse.targetX = -1000;
-      this.mouse.targetY = -1000;
-    });
+  // Plasma Aurora Blobs
+  const blobs = [
+    { x: 0.18, y: 0.22, r: 420, baseR: 420, angle: 0, speed: 0.007, paletteKey: 'aurora1', phase: 0 },
+    { x: 0.82, y: 0.28, r: 480, baseR: 480, angle: 1.8, speed: 0.006, paletteKey: 'aurora2', phase: 1.2 },
+    { x: 0.45, y: 0.65, r: 520, baseR: 520, angle: 3.4, speed: 0.005, paletteKey: 'aurora3', phase: 2.4 },
+    { x: 0.88, y: 0.82, r: 390, baseR: 390, angle: 4.8, speed: 0.008, paletteKey: 'aurora4', phase: 3.6 }
+  ];
 
-    this.animate();
-  }
+  // Interactive Particle Stars
+  const numParticles = 45;
+  const particles = [];
 
-  resize() {
-    this.width = this.canvas.width = window.innerWidth;
-    this.height = this.canvas.height = window.innerHeight;
-    const spacing = Math.max(52, Math.min(72, Math.floor(this.width / 26)));
-    this.cols = Math.ceil(this.width / spacing) + 1;
-    this.rows = Math.ceil(this.height / spacing) + 1;
-    this.spacing = spacing;
-
-    this.nodes = [];
-    for (let r = 0; r < this.rows; r++) {
-      for (let c = 0; c < this.cols; c++) {
-        this.nodes.push({
-          baseX: c * spacing,
-          baseY: r * spacing,
-          x: c * spacing,
-          y: r * spacing,
-          vx: 0,
-          vy: 0,
-          phase: (c * 0.22) + (r * 0.28)
-        });
-      }
+  function initParticles() {
+    particles.length = 0;
+    for (let i = 0; i < numParticles; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        baseX: Math.random() * width,
+        baseY: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        size: Math.random() * 2 + 1,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.02 + Math.random() * 0.03
+      });
     }
   }
 
-  animate() {
-    requestAnimationFrame(() => this.animate());
-    this.time += 0.02;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    initParticles();
+  }
 
-    // Smooth cursor interpolation
-    if (this.mouse.targetX !== -1000) {
-      this.mouse.x += (this.mouse.targetX - this.mouse.x) * 0.08;
-      this.mouse.y += (this.mouse.targetY - this.mouse.y) * 0.08;
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Mouse tracking with momentum
+  window.addEventListener('mousemove', (e) => {
+    mouse.targetX = e.clientX;
+    mouse.targetY = e.clientY;
+    mouse.isHovered = true;
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', () => {
+    mouse.isHovered = false;
+  });
+
+  // Current Theme state
+  function isDarkMode() {
+    return document.documentElement.classList.contains('dark');
+  }
+
+  let time = 0;
+
+  function render() {
+    time += 1;
+
+    // Smooth mouse interpolation
+    if (mouse.isHovered) {
+      mouse.vx = (mouse.targetX - mouse.x) * 0.06;
+      mouse.vy = (mouse.targetY - mouse.y) * 0.06;
+      mouse.x += mouse.vx;
+      mouse.y += mouse.vy;
     } else {
-      this.mouse.x = -1000;
-      this.mouse.y = -1000;
+      // Drift gently to screen center when idle
+      mouse.x += (width * 0.5 - mouse.x) * 0.02;
+      mouse.y += (height * 0.4 - mouse.y) * 0.02;
     }
 
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    ctx.clearRect(0, 0, width, height);
 
-    // Subtle CTU Blue radial ambient illumination behind cursor
-    if (this.mouse.x !== -1000) {
-      const grad = this.ctx.createRadialGradient(
-        this.mouse.x, this.mouse.y, 10,
-        this.mouse.x, this.mouse.y, 450
-      );
-      grad.addColorStop(0, 'rgba(31, 92, 169, 0.12)');
-      grad.addColorStop(0.5, 'rgba(31, 92, 169, 0.03)');
-      grad.addColorStop(1, 'rgba(248, 250, 252, 0)');
-      this.ctx.fillStyle = grad;
-      this.ctx.fillRect(0, 0, this.width, this.height);
+    const isDark = isDarkMode();
+    const palette = isDark ? THEME_PALETTES.dark : THEME_PALETTES.light;
+
+    // 1. Render Liquid Aurora Plasma Blobs
+    for (let i = 0; i < blobs.length; i++) {
+      const b = blobs[i];
+      b.angle += b.speed;
+
+      // Orbiting motion with organic Perlin-like oscillation
+      const offsetX = Math.cos(b.angle + b.phase) * (width * 0.12);
+      const offsetY = Math.sin(b.angle * 1.3 + b.phase) * (height * 0.1);
+
+      // Mouse attraction pull
+      const dx = mouse.x - (b.x * width + offsetX);
+      const dy = mouse.y - (b.y * height + offsetY);
+      const pull = 0.08;
+
+      const cx = (b.x * width + offsetX) + (dx * pull);
+      const cy = (b.y * height + offsetY) + (dy * pull);
+
+      // Dynamic breathing radius
+      const currentRadius = b.baseR + Math.sin(time * 0.02 + b.phase) * 35;
+
+      const col = palette[b.paletteKey];
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, currentRadius);
+      grad.addColorStop(0, `rgba(${col.r}, ${col.g}, ${col.b}, ${col.alpha})`);
+      grad.addColorStop(0.5, `rgba(${col.r}, ${col.g}, ${col.b}, ${col.alpha * 0.45})`);
+      grad.addColorStop(1, `rgba(${col.r}, ${col.g}, ${col.b}, 0)`);
+
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, currentRadius, 0, Math.PI * 2);
+      ctx.fill();
     }
 
-    // Update node wave physics
-    for (let i = 0; i < this.nodes.length; i++) {
-      const n = this.nodes[i];
-      const wave = Math.sin(this.time + n.phase) * 2.5;
-      const targetY = n.baseY + wave;
+    // 2. Render Interactive Floating Particles with Repulsion & Connective Web
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.pulse += p.pulseSpeed;
 
-      if (this.mouse.x !== -1000) {
-        const dx = this.mouse.x - n.x;
-        const dy = this.mouse.y - n.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const maxDist = 180;
+      // Natural drift
+      p.x += p.vx;
+      p.y += p.vy;
 
-        if (dist < maxDist && dist > 0) {
-          const force = (1 - dist / maxDist) * 18;
-          const angle = Math.atan2(dy, dx);
-          n.vx -= Math.cos(angle) * force * 0.3;
-          n.vy -= Math.sin(angle) * force * 0.3;
-        }
+      // Wrap around bounds
+      if (p.x < 0) p.x = width;
+      if (p.x > width) p.x = 0;
+      if (p.y < 0) p.y = height;
+      if (p.y > height) p.y = 0;
+
+      // Mouse Repulsion Physics
+      const pdx = p.x - mouse.x;
+      const pdy = p.y - mouse.y;
+      const dist = Math.sqrt(pdx * pdx + pdy * pdy);
+
+      if (dist < mouse.radius && dist > 0) {
+        const force = (mouse.radius - dist) / mouse.radius;
+        const angle = Math.atan2(pdy, pdx);
+        p.x += Math.cos(angle) * force * 5;
+        p.y += Math.sin(angle) * force * 5;
       }
 
-      // Spring back to base grid
-      n.vx += (n.baseX - n.x) * 0.05;
-      n.vy += (targetY - n.y) * 0.05;
-      n.vx *= 0.85;
-      n.vy *= 0.85;
-      n.x += n.vx;
-      n.y += n.vy;
-    }
+      // Render Particle
+      const pulseSize = p.size * (1 + Math.sin(p.pulse) * 0.35);
+      ctx.fillStyle = palette.particleColor;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, pulseSize, 0, Math.PI * 2);
+      ctx.fill();
 
-    // Draw Architectural Grid Lines in CTU Blue
-    this.ctx.lineWidth = 1;
+      // Subtle Connective Constellation Lines
+      for (let j = i + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const lineDx = p.x - p2.x;
+        const lineDy = p.y - p2.y;
+        const lineDist = Math.sqrt(lineDx * lineDx + lineDy * lineDy);
 
-    for (let r = 0; r < this.rows; r++) {
-      for (let c = 0; c < this.cols; c++) {
-        const idx = r * this.cols + c;
-        const curr = this.nodes[idx];
-        if (!curr) continue;
-
-        // Horizontal line
-        if (c < this.cols - 1) {
-          const right = this.nodes[idx + 1];
-          if (right) {
-            const dist = this.mouse.x !== -1000 
-              ? Math.hypot(this.mouse.x - curr.x, this.mouse.y - curr.y) 
-              : 999;
-            const alpha = dist < 200 ? 0.28 : 0.06;
-            this.ctx.strokeStyle = `rgba(31, 92, 169, ${alpha})`;
-            this.ctx.beginPath();
-            this.ctx.moveTo(curr.x, curr.y);
-            this.ctx.lineTo(right.x, right.y);
-            this.ctx.stroke();
-          }
-        }
-
-        // Vertical line
-        if (r < this.rows - 1) {
-          const down = this.nodes[(r + 1) * this.cols + c];
-          if (down) {
-            const dist = this.mouse.x !== -1000 
-              ? Math.hypot(this.mouse.x - curr.x, this.mouse.y - curr.y) 
-              : 999;
-            const alpha = dist < 200 ? 0.28 : 0.06;
-            this.ctx.strokeStyle = `rgba(31, 92, 169, ${alpha})`;
-            this.ctx.beginPath();
-            this.ctx.moveTo(curr.x, curr.y);
-            this.ctx.lineTo(down.x, down.y);
-            this.ctx.stroke();
-          }
-        }
-
-        // Draw node tick mark at grid intersections near cursor
-        if (this.mouse.x !== -1000) {
-          const d = Math.hypot(this.mouse.x - curr.x, this.mouse.y - curr.y);
-          if (d < 150) {
-            this.ctx.fillStyle = '#1f5ca9';
-            this.ctx.fillRect(curr.x - 1.5, curr.y - 1.5, 3, 3);
-          }
+        if (lineDist < 110) {
+          ctx.strokeStyle = palette.lineColor;
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
         }
       }
     }
+
+    animId = requestAnimationFrame(render);
   }
-}
 
-document.addEventListener('DOMContentLoaded', () => {
-  new PolyhedralFieldCanvas('geometric-canvas');
-});
+  render();
+
+  // Clean redraw on theme switch
+  const observer = new MutationObserver(() => {
+    // Instant smooth color transition
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+})();
