@@ -429,7 +429,7 @@ window.I18N = {
     contact_form_send: "TRANSMIT MESSAGE ➔",
 
     // Footer
-    footer_text: "PHUC TRAN — SOFTWARE ENGINEERING — CAN THO UNIVERSITY (CTU).",
+    footer_text: "TRAN PHUC — SOFTWARE ENGINEERING — CAN THO UNIVERSITY (CTU).",
     footer_rights: "SOURCE ALL RIGHTS RESERVED © 2026 PHUCTRAN1501.",
 
     // Command Palette (Ctrl+K)
