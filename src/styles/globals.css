@@ -1,0 +1,342 @@
+@import "tailwindcss";
+
+/* 100% PURE MONOCHROME DESIGN TOKENS — LIGHT MODE DEFAULT, ZERO ITEM BORDERS */
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --muted: #525252;
+  --subtle: #737373;
+  --ghost: rgba(0, 0, 0, 0.045);
+  --inv-bg: #000000;
+  --inv-fg: #ffffff;
+  --ink-rgb: 0, 0, 0;
+}
+
+html.is-invert {
+  --bg: #000000;
+  --fg: #ffffff;
+  --muted: #a3a3a3;
+  --subtle: #737373;
+  --ghost: rgba(255, 255, 255, 0.06);
+  --inv-bg: #ffffff;
+  --inv-fg: #000000;
+  --ink-rgb: 255, 255, 255;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+.font-mono-tech {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+::selection {
+  background-color: var(--inv-bg);
+  color: var(--inv-fg);
+}
+
+/* Optical Ink Lens Cursor (mix-blend-mode: difference) */
+.optical-lens {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 80;
+  transform: translate3d(-120px, -120px, 0);
+  transition:
+    width 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    height 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 200ms ease;
+  will-change: transform, width, height;
+}
+
+.optical-lens.is-expanded {
+  width: 96px;
+  height: 96px;
+}
+
+@media (pointer: coarse) {
+  .optical-lens {
+    display: none !important;
+  }
+}
+
+/* 3D Perspective Stage Transitions */
+.acts-stage {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.act-panel {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(60px, 0, -140px) rotateY(8deg) scale(0.94);
+  transition:
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 460ms cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
+}
+
+.act-panel.is-prev {
+  transform: translate3d(-60px, 0, -140px) rotateY(-8deg) scale(0.94);
+}
+
+.act-panel.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
+}
+
+/* Kinetic Reveal (zero top clipping so stacked Vietnamese diacritics never crop) */
+.clip-wrap {
+  overflow: visible;
+}
+
+.clip-inner {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition:
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 460ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.act-panel.is-active .clip-inner {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Monochrome-by-default Tech Stack Icon -> Brand Color on Hover or Auto-Play Highlight */
+.tech-icon-svg {
+  color: var(--fg);
+  opacity: 0.72;
+  transition:
+    color 240ms ease,
+    transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 200ms ease;
+}
+
+.tech-item:hover .tech-icon-svg,
+.tech-item.is-colored .tech-icon-svg {
+  color: var(--brand-color);
+  opacity: 1;
+  transform: translateY(-2px) scale(1.16);
+}
+
+/* Autonomous Showcase Top Progress Hairline */
+@keyframes autoProgressFill {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.autoplay-bar {
+  transform-origin: left center;
+  will-change: transform;
+  animation-name: autoProgressFill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.elastic-char {
+  display: inline-block;
+  transform-origin: bottom center;
+  will-change: transform;
+}
+
+/* Optical X-Ray Architectural Loupe */
+.xray-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  pointer-events: none;
+  background-color: var(--inv-bg);
+  color: var(--inv-fg);
+  clip-path: circle(0px at var(--xray-x, 50%) var(--xray-y, 50%));
+  transition: clip-path 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: clip-path;
+}
+
+.xray-layer.is-open {
+  clip-path: circle(165px at var(--xray-x, 50%) var(--xray-y, 50%));
+  transition: clip-path 110ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 7-Column Staggered Vertical Ink Shutter Wave */
+.shutter-columns {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  pointer-events: none;
+}
+
+.shutter-col {
+  background-color: var(--inv-bg);
+  transform: scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+}
+
+@keyframes colSweep {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top center;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top center;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom center;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom center;
+  }
+}
+
+.shutter-col.sweeping {
+  animation: colSweep 440ms cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* Concentric Monochrome Click Shockwave Ripple */
+@keyframes rippleExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.15);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+.click-ripple-ring {
+  position: fixed;
+  width: 110px;
+  height: 110px;
+  border-radius: 9999px;
+  border: 1px solid var(--fg);
+  pointer-events: none;
+  z-index: 75;
+  animation: rippleExpand 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.act-panel.is-active .delay-1 {
+  transition-delay: 80ms;
+}
+.act-panel.is-active .delay-2 {
+  transition-delay: 160ms;
+}
+.act-panel.is-active .delay-3 {
+  transition-delay: 240ms;
+}
+
+/* Circular Iris-Wipe Full-Screen Takeover */
+.iris-takeover {
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 680ms cubic-bezier(0.77, 0, 0.175, 1);
+  pointer-events: none;
+}
+
+.iris-takeover.is-open {
+  clip-path: circle(150% at var(--iris-x, 50%) var(--iris-y, 50%));
+  pointer-events: auto;
+}
+
+/* Giant Works Hover Isolation */
+.work-reel-item {
+  transition:
+    opacity 280ms ease,
+    transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.works-reel:hover .work-reel-item:not(:hover) {
+  opacity: 0.15;
+}
+
+.work-reel-item:hover {
+  transform: translateX(18px);
+}
+
+/* Ghost Background Kinetic Marquee */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 28s linear infinite;
+}
+
+@keyframes pulseInk {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.25;
+    transform: scale(0.75);
+  }
+}
+
+.ink-pulse {
+  animation: pulseInk 1.8s ease-in-out infinite;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .act-panel,
+  .clip-inner,
+  .iris-takeover,
+  .work-reel-item,
+  .marquee-track,
+  .ink-pulse {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

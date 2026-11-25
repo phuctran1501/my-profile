@@ -4,33 +4,31 @@ This file provides guidance to Agent Code when working with code in this reposit
 
 ## Tổng quan dự án
 
-Trang profile cá nhân dành cho lập trình viên. Đây là trang giới thiệu bản thân của chủ dự án (GitHub: https://github.com/phuctran1501), nên nội dung (giới thiệu, kỹ năng, dự án, liên hệ) lấy từ thông tin thật trên GitHub đó.
+Trang profile cá nhân dành cho lập trình viên PHUC TRAN (`phuctran1501`, GitHub: https://github.com/phuctran1501). Mọi nội dung (giới thiệu, kỹ năng, dự án `NewsHub`, `CTU-Scheduler`, `SmartHire`, `Nimdora`, liên hệ) sử dụng thông tin thật từ chủ dự án.
 
 ## Tech Stack
 
-- HTML, CSS, JavaScript (thuần)
-- Tailwind CSS
-- Framer animation (dùng cho hiệu ứng chuyển động), CSS thuần
+- **Vite + React 19 + TypeScript (Strict)**
+- **Tailwind CSS v4** (`@tailwindcss/vite`)
+- **Motion (`motion/react`)** cho physics transitions và Filmstrip overview
+- **Lucide React** (`strokeWidth={1.5}`), **cmdk** (`Ctrl+K` / `⌘K`), **Sonner** (notifications)
+- **WebGL / HTML5 Canvas** cho đồ họa tương tác thuần Trắng–Đen
 
-## Quy tắc thiết kế
+## Quy tắc thiết kế ("MONOLITH" Borderless Exhibition)
 
-- Phong cách: mượt mà, ấn tượng nhưng hiện đại và tinh tế. Không làm rối mắt hiệu ứng.
-- Không đổ bóng quá nhiều, không hiệu ứng glass, không giao diện Cyber, không bị AI slop, không gập khuông theo chuẩn thiết kế của AI.
-- Thêm hiệu ứng đã mắt và sáng tạo, có thể đề xuất
-- Luôn responsive, hiển thị tốt trên laptop và mobile, và tương thích nhiều trình duyệt.
+- **Kiến trúc trình diễn toàn khung hình:** Không cuộn dọc trang truyền thống; chuyển cảnh 3D giữa 5 Chương (`MONOLITH`, `WORKS`, `SIGNAL`, `ALGORITHMS`, `FINALE`) bằng kéo ngang, cuộn chuột, phím `←`/`→` và chế độ `Filmstrip (G)`.
+- **100% Trắng & Đen thuần khiết (Mặc định Light Mode):** Chỉ sử dụng thang xám trung tính (`#ffffff` nền, `#000000` mực in) kèm nút đảo cực (`Invert`). Tuyệt đối không dùng màu sắc khác, không glassmorphism, không đổ bóng dày, không AI slop, không emoji.
+- **Không đường viền bọc item (Zero Item Borders):** Không đóng khung viền quanh dự án, nút hay thẻ thông số; phân cấp bằng kích thước typography, khoảng trắng âm (negative space) và đảo cực Đen/Trắng.
+- **Responsive:** Hoạt động mượt mà trên Desktop và Mobile.
 
 ## Quy tắc bắt buộc
 
-- Bảng màu tôi ưu tiên là màu tối.
-- Hỗ trợ 2 ngôn ngữ: **Anh, Việt** (nút EN / VI ). Mọi văn bản hiển thị trên giao diện phải có đủ hai phiên bản (thêm vào `js/i18n.js`), không hard-code một ngôn ngữ.
+- Song ngữ **Việt / Anh** hoàn chỉnh (`src/i18n/vi.ts` và `src/i18n/en.ts`, kiểm tra đầy đủ key bằng TypeScript `Record<TranslationKey, string>`).
 
-## Workflow
+## Workflow kiểm tra
 
-Sau khi code xong, luôn kiểm tra giao diện hiện tại:
+Sau khi chỉnh sửa, luôn chạy:
 
-1. Hiệu ứng đủ bắt mắt sáng tạo không, web có bị chậm không.
-2. Có lỗi font không.
-3. Có lỗi animation không.
-4. Kiểm tra responsive trên laptop và mobile, cùng cả hai ngôn ngữ Anh/Việt
-
-Note: có thể tìm kiếm thêm tham khảo
+1. `npm run typecheck`
+2. `npm run build`
+3. Kiểm tra hiển thị Light Mode thuần Trắng/Đen, responsive Desktop/Mobile và cả hai ngôn ngữ VI/EN.
