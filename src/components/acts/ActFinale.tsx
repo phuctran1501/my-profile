@@ -119,10 +119,10 @@ export function ActFinale({ isActive, isPrev, onCopyEmail }: ActFinaleProps) {
       }`}
     >
       <div
-        className="absolute inset-x-0 top-1/2 -translate-y-1/2 pointer-events-none overflow-hidden select-none"
+        className="absolute inset-x-0 top-1/2 -translate-y-1/2 pointer-events-none overflow-x-hidden py-12 select-none"
         style={{ color: 'var(--ghost)' }}
       >
-        <div className="marquee-track text-[20vw] sm:text-[150px] font-black tracking-tighter leading-none uppercase whitespace-nowrap">
+        <div className="marquee-track text-[20vw] sm:text-[150px] font-black tracking-tighter leading-[1.35] py-4 uppercase whitespace-nowrap">
           <span>{t('a5_marquee')}&nbsp;</span>
           <span>{t('a5_marquee')}&nbsp;</span>
         </div>
